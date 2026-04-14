@@ -17,8 +17,8 @@ CREATE TABLE IF NOT EXISTS public.usuarios (
     id_tipousuario INTEGER NOT NULL,
     id_situacaocadastro INTEGER DEFAULT 1 NOT NULL,
     data_alteracao DATE DEFAULT CURRENT_DATE,
-    FOREIGN KEY (id_tipousuario) REFERENCES tipo_usuario(id),
-    FOREIGN KEY (id_situacaocadastro) REFERENCES situacao_cadastro(id)
+    FOREIGN KEY (id_tipousuario) REFERENCES public.tipo_usuario(id),
+    FOREIGN KEY (id_situacaocadastro) REFERENCES public.situacao_cadastro(id)
 );
 
 CREATE TABLE IF NOT EXISTS public.enderecos (

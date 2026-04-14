@@ -2,9 +2,9 @@ INSERT INTO tipo_usuario (descricao) VALUES
 ('DONO'),
 ('CLIENTE');
 
-INSERT INTO situacao_cadastro (id, descricao) VALUES
-(0, 'EXCLUIDO'),
-(1, 'ATIVO');
+INSERT INTO situacao_cadastro (descricao) VALUES
+('EXCLUIDO'),
+('ATIVO');
 
 INSERT INTO usuarios (nome, email, login, senha, id_tipousuario) VALUES
 ('Ana Costa', 'ana@email.com', 'ana', '$2a$10$e0NR3rRkqXy5xGQz6zYF1u1wPz8xF5eG6F9j1bKq8z0QvHn8Zx1QK', 1),
