@@ -4,7 +4,6 @@ import br.com.fiap.restauranteapi.exceptions.InvalidPasswordException;
 import br.com.fiap.restauranteapi.model.request.AlterarSenhaRequest;
 import br.com.fiap.restauranteapi.model.response.AlterarSenhaResponse;
 import br.com.fiap.restauranteapi.service.usuario.UsuarioService;
-import jakarta.validation.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;

@@ -55,7 +55,7 @@ public class GlobalExceptionHandler {
         var response = new ErrorResponseDTO(
                 HttpStatus.BAD_REQUEST.value(),
                 HttpStatus.BAD_REQUEST.getReasonPhrase(),
-                "A requisição contém dados inválidos ou inconsistentes!",
+                "A requisição contém dados inválidos!",
                 ex.getMessage());
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
