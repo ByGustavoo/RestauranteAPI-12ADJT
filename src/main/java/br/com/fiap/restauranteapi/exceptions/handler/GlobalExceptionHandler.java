@@ -3,7 +3,6 @@ package br.com.fiap.restauranteapi.exceptions.handler;
 import br.com.fiap.restauranteapi.exceptions.InvalidPasswordException;
 import br.com.fiap.restauranteapi.exceptions.LoginNotFoundException;
 import br.com.fiap.restauranteapi.exceptions.dto.ErrorResponseDTO;
-import br.com.fiap.restauranteapi.exceptions.dto.MethodArgumentNotValidResponseDTO;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,14 +38,20 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<?> handleBadRequestException(MethodArgumentNotValidException ex) {
+    public ResponseEntity<ErrorResponseDTO> handleBadRequestException(MethodArgumentNotValidException ex) {
 
-        var erros = ex.getFieldErrors()
+        var detalhes = String.join("; ", ex.getFieldErrors()
                 .stream()
-                .map(MethodArgumentNotValidResponseDTO::new)
-                .toList();
+                .map(error -> error.getField() + ": " + error.getDefaultMessage())
+                .toList());
 
-        return ResponseEntity.badRequest().body(erros);
+        var response = new ErrorResponseDTO(
+                HttpStatus.BAD_REQUEST.value(),
+                HttpStatus.BAD_REQUEST.getReasonPhrase(),
+                "A requisição contém dados inválidos!",
+                detalhes);
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 
     @ExceptionHandler(BadRequestException.class)
