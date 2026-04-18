@@ -10,19 +10,19 @@ import javax.sql.DataSource;
 @TestConfiguration
 public class TestDataBaseConfig {
 
-    @Value("${DATABASE_IP}")
+    @Value("${DATABASE_IP:localhost}")
     private String ip;
 
-    @Value("${DATABASE_USER}")
+    @Value("${DATABASE_USER:postgres}")
     private String usuario;
 
-    @Value("${DATABASE_PASSWORD}")
+    @Value("${DATABASE_PASSWORD:postgres}")
     private String senha;
 
-    @Value("${DATABASE_PORT}")
+    @Value("${DATABASE_PORT:5432}")
     private String porta;
 
-    @Value("${DATABASE_TEST_NAME}")
+    @Value("${DATABASE_NAME:restaurante}")
     private String nome;
 
     private String getUrl() {

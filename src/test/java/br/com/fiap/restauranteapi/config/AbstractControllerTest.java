@@ -16,8 +16,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Transactional
 @AutoConfigureMockMvc
 @ActiveProfiles("test")
+@Import(value = TestDataBaseConfig.class)
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-@Import(value = {TestDataBaseConfig.class, TestSecurityConfig.class})
 public abstract class AbstractControllerTest {
 
     @Autowired

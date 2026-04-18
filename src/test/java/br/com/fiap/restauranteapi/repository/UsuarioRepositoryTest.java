@@ -16,6 +16,7 @@ class UsuarioRepositoryTest extends AbstractTest {
     void findByLoginTest() {
         var usuario = Assertions.assertDoesNotThrow(() -> usuarioRepository.findByLogin("joao"));
 
+        Assertions.assertNotNull(usuario);
         Assertions.assertTrue(usuario.isPresent());
         Assertions.assertEquals("joao", usuario.get().getLogin());
     }
