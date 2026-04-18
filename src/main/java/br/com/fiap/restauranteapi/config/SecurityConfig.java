@@ -20,9 +20,9 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity pHttpSecurity) {
-        pHttpSecurity.csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
-
-        return pHttpSecurity.build();
+        return pHttpSecurity.csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(authorizeRequests ->
+                        authorizeRequests.anyRequest().permitAll())
+                .build();
     }
 }

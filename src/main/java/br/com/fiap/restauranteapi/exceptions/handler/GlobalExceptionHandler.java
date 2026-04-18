@@ -3,9 +3,11 @@ package br.com.fiap.restauranteapi.exceptions.handler;
 import br.com.fiap.restauranteapi.exceptions.InvalidPasswordException;
 import br.com.fiap.restauranteapi.exceptions.LoginNotFoundException;
 import br.com.fiap.restauranteapi.exceptions.dto.ErrorResponseDTO;
+import br.com.fiap.restauranteapi.exceptions.dto.MethodArgumentNotValidResponseDTO;
 import org.apache.coyote.BadRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -38,23 +40,17 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorResponseDTO> handleBadRequestException(MethodArgumentNotValidException ex) {
+    public ResponseEntity<?> handleBadRequestException(MethodArgumentNotValidException ex) {
 
-        var detalhes = String.join("; ", ex.getFieldErrors()
+        var erros = ex.getFieldErrors()
                 .stream()
-                .map(error -> error.getField() + ": " + error.getDefaultMessage())
-                .toList());
+                .map(MethodArgumentNotValidResponseDTO::new)
+                .toList();
 
-        var response = new ErrorResponseDTO(
-                HttpStatus.BAD_REQUEST.value(),
-                HttpStatus.BAD_REQUEST.getReasonPhrase(),
-                "A requisição contém dados inválidos!",
-                detalhes);
-
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        return ResponseEntity.badRequest().body(erros);
     }
 
-    @ExceptionHandler(BadRequestException.class)
+    @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ErrorResponseDTO> handleBadRequestException(BadRequestException ex) {
 
         var response = new ErrorResponseDTO(

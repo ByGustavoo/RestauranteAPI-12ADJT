@@ -46,11 +46,7 @@ public class AuthController {
                     content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class)))
     })
     @PatchMapping("/update-password")
-    public ResponseEntity<AlterarSenhaResponse> alterarSenha(
-            @io.swagger.v3.oas.annotations.parameters.RequestBody(description = "Dados para alteração de senha",
-                    required = true,
-                    content = @Content(schema = @Schema(implementation = AlterarSenhaRequest.class)))
-            @RequestBody @Valid AlterarSenhaRequest pAlterarSenhaRequest) {
+    public ResponseEntity<AlterarSenhaResponse> alterarSenha(@RequestBody @Valid AlterarSenhaRequest pAlterarSenhaRequest) {
         return ResponseEntity.ok(authService.alterarSenha(pAlterarSenhaRequest));
     }
 }
