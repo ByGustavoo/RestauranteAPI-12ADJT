@@ -1,6 +1,6 @@
 package br.com.fiap.restauranteapi.controller.endereco;
 
-import br.com.fiap.restauranteapi.model.entity.endereco.Endereco;
+import br.com.fiap.restauranteapi.model.dto.endereco.EnderecoDTO;
 import br.com.fiap.restauranteapi.service.endereco.EnderecoService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,15 +10,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/v1/endereco")
-public class enderecoController {
+public class EnderecoController {
     private final EnderecoService enderecoService;
 
-    public enderecoController(EnderecoService enderecoService) {
+    public EnderecoController(EnderecoService enderecoService) {
         this.enderecoService = enderecoService;
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Endereco> buscarEnderecoPorId(@PathVariable Integer id) {
+    public ResponseEntity<EnderecoDTO> buscarEnderecoPorId(@PathVariable Integer id) {
         return ResponseEntity.ok(enderecoService.getEnderecoById(id));
     }
 }

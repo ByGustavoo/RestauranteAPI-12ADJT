@@ -1,6 +1,6 @@
 package br.com.fiap.restauranteapi.controller.tipoUsuario;
 
-import br.com.fiap.restauranteapi.model.entity.tipousuario.TipoUsuario;
+import br.com.fiap.restauranteapi.model.dto.tipousuario.TipoUsuarioDTO;
 import br.com.fiap.restauranteapi.service.TipoUsuario.TipoUsuarioService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +19,7 @@ public class TipoUsuarioController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<TipoUsuario> buscarTipoUsuarioPorId(@PathVariable Integer id) {
+    public ResponseEntity<TipoUsuarioDTO> buscarTipoUsuarioPorId(@PathVariable Integer id) {
         return ResponseEntity.ok(tipoUsuarioService.getTipoUsuarioById(id));
     }
 }

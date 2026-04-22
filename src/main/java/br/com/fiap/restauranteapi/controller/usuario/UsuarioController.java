@@ -1,8 +1,7 @@
 package br.com.fiap.restauranteapi.controller.usuario;
 
-import br.com.fiap.restauranteapi.model.entity.usuario.Usuario;
+import br.com.fiap.restauranteapi.model.dto.usuario.UsuarioDTO;
 import br.com.fiap.restauranteapi.service.usuario.UsuarioService;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,9 +19,8 @@ public class UsuarioController {
         this.usuarioService = usuarioService;
     }
 
-
     @GetMapping("/{id}")
-    public ResponseEntity<Usuario> buscarUsuarioPorId(@PathVariable Integer id){
+    public ResponseEntity<UsuarioDTO> buscarUsuarioPorId(@PathVariable Integer id) {
         return ResponseEntity.ok(usuarioService.getUsuarioById(id));
     }
 

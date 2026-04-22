@@ -1,6 +1,6 @@
 package br.com.fiap.restauranteapi.controller.situacaoCadastro;
 
-import br.com.fiap.restauranteapi.model.entity.situacao.SituacaoCadastro;
+import br.com.fiap.restauranteapi.model.dto.situacao.SituacaoCadastroDTO;
 import br.com.fiap.restauranteapi.service.situacaoCadastro.SituacaoCadastroService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +19,7 @@ public class SituacaoCadastroController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<SituacaoCadastro> buscarSituacaoCadastroPorId(@PathVariable Integer id) {
+    public ResponseEntity<SituacaoCadastroDTO> buscarSituacaoCadastroPorId(@PathVariable Integer id) {
         return ResponseEntity.ok(situacaoCadastroService.getSituacaoCadastroById(id));
     }
 }
