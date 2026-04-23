@@ -1,4 +1,4 @@
-package br.com.fiap.restauranteapi.service.TipoUsuario;
+package br.com.fiap.restauranteapi.service.tipousuario;
 
 import br.com.fiap.restauranteapi.config.AbstractTest;
 import org.junit.jupiter.api.Test;
@@ -16,9 +16,8 @@ class TipoUsuarioServiceTest extends AbstractTest {
      @Test
         void getTipoUsuarioById() {
             var tipoUsuario = tipoUsuarioService.getTipoUsuarioById(1);
+
             assertNotNull(tipoUsuario);
             assertEquals(1, tipoUsuario.id());
         }
-
-
 }

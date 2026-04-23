@@ -18,6 +18,7 @@ class UsuarioServiceTest extends AbstractTest {
     @Order(1)
     void getUsuarioByLoginTest() {
         var usuario = usuarioService.getUsuarioByLogin("joao");
+
         Assertions.assertNotNull(usuario);
         Assertions.assertEquals("joao", usuario.getLogin());
     }
@@ -26,6 +27,7 @@ class UsuarioServiceTest extends AbstractTest {
     @Order(2)
     void getUsuarioByIdTest(){
         var usuario = usuarioService.getUsuarioById(1);
+
         Assertions.assertNotNull(usuario);
         Assertions.assertEquals(1, usuario.id());
     }
