@@ -1,6 +1,7 @@
 package br.com.fiap.restauranteapi.repository;
 
 import br.com.fiap.restauranteapi.config.AbstractTest;
+import br.com.fiap.restauranteapi.repository.usuario.UsuarioRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,5 +20,14 @@ class UsuarioRepositoryTest extends AbstractTest {
         Assertions.assertNotNull(usuario);
         Assertions.assertTrue(usuario.isPresent());
         Assertions.assertEquals("joao", usuario.get().getLogin());
+    }
+
+    @Test
+    void findByNomeContainingIgnoreCaseTest() {
+        var usuario = Assertions.assertDoesNotThrow(() -> usuarioRepository.findByNome("João Silva"));
+
+        Assertions.assertNotNull(usuario);
+        Assertions.assertTrue(usuario.isPresent());
+        Assertions.assertEquals("João Silva", usuario.get().getNome());
     }
 }

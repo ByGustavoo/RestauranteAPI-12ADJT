@@ -1,7 +1,8 @@
 package br.com.fiap.restauranteapi.service.usuario;
 
 import br.com.fiap.restauranteapi.config.AbstractTest;
-import br.com.fiap.restauranteapi.exceptions.LoginNotFoundException;
+import br.com.fiap.restauranteapi.exceptions.UsuarioNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -18,13 +19,53 @@ class UsuarioServiceTest extends AbstractTest {
     @Order(1)
     void getUsuarioByLoginTest() {
         var usuario = usuarioService.getUsuarioByLogin("joao");
+
         Assertions.assertNotNull(usuario);
         Assertions.assertEquals("joao", usuario.getLogin());
     }
 
     @Test
     @Order(2)
-    void getUsuarioByLoginWithExceptionTest() {
-        Assertions.assertThrows(LoginNotFoundException.class, () -> usuarioService.getUsuarioByLogin("loginInexistente"));
+    void getUsuarioByLoginExceptionTest() {
+        Assertions.assertThrows(UsuarioNotFoundException.class, () -> usuarioService.getUsuarioByLogin("loginInexistente"));
+    }
+
+    @Test
+    @Order(3)
+    void getUsuarioByIdTest() {
+        var usuario = usuarioService.getUsuarioById(1);
+
+        Assertions.assertNotNull(usuario);
+        Assertions.assertEquals(1, usuario.id());
+    }
+
+    @Test
+    @Order(4)
+    void getUsuarioByIdExceptionTest() {
+        Assertions.assertThrows(EntityNotFoundException.class, () -> usuarioService.getUsuarioById(10));
+    }
+
+    @Test
+    @Order(5)
+    void getUsuarioByNomeTest() {
+        var usuario = usuarioService.getUsuarioByNome("João Silva");
+
+        Assertions.assertNotNull(usuario);
+        Assertions.assertEquals("João Silva", usuario.nome());
+    }
+
+    @Test
+    @Order(6)
+    void getUsuarioByNomeSemEspacoTest() {
+        var usuario = usuarioService.getUsuarioByNome("JoãoSilva");
+
+        Assertions.assertNotNull(usuario);
+        Assertions.assertEquals("João Silva", usuario.nome());
+    }
+
+    @Test
+    @Order(7)
+    void getUsuarioByNomeExceptionTest() {
+        Assertions.assertThrows(UsuarioNotFoundException.class, () -> usuarioService.getUsuarioByNome("Nome Inexistente"));
     }
 }

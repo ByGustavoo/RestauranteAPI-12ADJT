@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.time.LocalDateTime;
 
-@Schema(description = "Estrutura padrão para respostas de erro da API")
+@Schema(description = "Estrutura genérica para respostas de erro da API")
 public record ErrorResponseDTO(
 
         @Schema(description = "Código HTTP da resposta")
