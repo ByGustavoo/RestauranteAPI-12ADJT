@@ -1,4 +1,4 @@
-package br.com.fiap.restauranteapi.controller.tipousuario;
+package br.com.fiap.restauranteapi.controller.tipoUsuario;
 
 import br.com.fiap.restauranteapi.model.dto.tipousuario.TipoUsuarioDTO;
 import br.com.fiap.restauranteapi.service.tipousuario.TipoUsuarioService;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/v1/tipousuario")
+@RequestMapping("/v1/tipoUsuario")
 public class TipoUsuarioController {
 
     private final TipoUsuarioService tipoUsuarioService;

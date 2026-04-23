@@ -1,4 +1,4 @@
-package br.com.fiap.restauranteapi.controller.situacaocadastro;
+package br.com.fiap.restauranteapi.controller.situacaoCadastro;
 
 import br.com.fiap.restauranteapi.model.dto.situacao.SituacaoCadastroDTO;
 import br.com.fiap.restauranteapi.service.situacaocadastro.SituacaoCadastroService;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/v1/situacaocadastro")
+@RequestMapping("/v1/situacaoCadastro")
 public class SituacaoCadastroController {
 
     private final SituacaoCadastroService situacaoCadastroService;

@@ -1,6 +1,8 @@
-package br.com.fiap.restauranteapi.service.situacaocadastro;
+package br.com.fiap.restauranteapi.service.situacaoCadastro;
 
 import br.com.fiap.restauranteapi.config.AbstractTest;
+import br.com.fiap.restauranteapi.service.situacaocadastro.SituacaoCadastroService;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
