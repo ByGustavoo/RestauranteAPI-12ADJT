@@ -33,9 +33,9 @@ public class UsuarioService {
     }
 
     @Transactional(readOnly = true)
-    public UsuarioDTO getUsuarioByNome(String nome) {
+    public UsuarioDTO getUsuarioByName(String nome) {
         String nomeNormalizado = nome.trim();
-        Usuario usuario = usuarioRepository.findByNomeNormalizado(nomeNormalizado)
+        Usuario usuario = usuarioRepository.findByNameNormalizado(nomeNormalizado)
             .orElseThrow(() -> new RuntimeException("Usuario não encontrado com o nome: " + nomeNormalizado));
         return new UsuarioDTO(
                 usuario.getId(),

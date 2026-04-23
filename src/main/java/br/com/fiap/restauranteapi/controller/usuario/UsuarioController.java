@@ -25,7 +25,7 @@ public class UsuarioController {
     }
 
     @GetMapping(params = "nome")
-    public ResponseEntity<UsuarioDTO> buscarUsuarioPorNomeQuery(@RequestParam String nome) {
-        return ResponseEntity.ok(usuarioService.getUsuarioByNome(nome));
+    public ResponseEntity<UsuarioDTO> getUsuarioByNameQuery(@RequestParam String nome) {
+        return ResponseEntity.ok(usuarioService.getUsuarioByName(nome));
     }
 }

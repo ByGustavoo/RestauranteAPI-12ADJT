@@ -35,7 +35,7 @@ class UsuarioServiceTest extends AbstractTest {
     @Test
     @Order(3)
     void getUsuarioByNomeIgnoreCaseTest() {
-        var usuario = usuarioService.getUsuarioByNome(" joão silva ");
+        var usuario = usuarioService.getUsuarioByName(" joão silva ");
 
         Assertions.assertNotNull(usuario);
         Assertions.assertEquals("João Silva", usuario.nome());
@@ -44,7 +44,7 @@ class UsuarioServiceTest extends AbstractTest {
     @Test
     @Order(4)
     void getUsuarioByNomeSemEspacoTest() {
-        var usuario = usuarioService.getUsuarioByNome("JoãoSilva");
+        var usuario = usuarioService.getUsuarioByName("JoãoSilva");
         
         Assertions.assertNotNull(usuario);
         Assertions.assertEquals("João Silva", usuario.nome());
