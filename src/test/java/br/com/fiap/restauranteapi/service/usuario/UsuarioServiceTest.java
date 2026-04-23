@@ -1,6 +1,7 @@
 package br.com.fiap.restauranteapi.service.usuario;
 
 import br.com.fiap.restauranteapi.config.AbstractTest;
+import br.com.fiap.restauranteapi.exceptions.UsuarioNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Order;
@@ -26,7 +27,7 @@ class UsuarioServiceTest extends AbstractTest {
     @Test
     @Order(2)
     void getUsuarioByLoginExceptionTest() {
-        Assertions.assertThrows(EntityNotFoundException.class, () -> usuarioService.getUsuarioByLogin("loginInexistente"));
+        Assertions.assertThrows(UsuarioNotFoundException.class, () -> usuarioService.getUsuarioByLogin("loginInexistente"));
     }
 
     @Test

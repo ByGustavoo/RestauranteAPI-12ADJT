@@ -28,6 +28,6 @@ class UsuarioRepositoryTest extends AbstractTest {
 
         Assertions.assertNotNull(usuario);
         Assertions.assertTrue(usuario.isPresent());
-        Assertions.assertEquals("João Silva", usuario.get().getLogin());
+        Assertions.assertEquals("João Silva", usuario.get().getNome());
     }
 }
