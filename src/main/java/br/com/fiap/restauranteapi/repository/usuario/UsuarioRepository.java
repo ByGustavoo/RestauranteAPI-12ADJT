@@ -17,5 +17,5 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
             FROM Usuario u
             WHERE lower(replace(u.nome, ' ', '')) = lower(replace(:nome, ' ', ''))
             """)
-    Optional<Usuario> findByNameNormalizado(@Param("nome") String nome);
+    Optional<Usuario> findByName(@Param("nome") String nome);
 }
