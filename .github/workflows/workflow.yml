@@ -12,11 +12,9 @@ jobs:
       postgres:
         image: postgres:18
         env:
-          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
         ports:
-          - 5432:5432
+          - 8745:5432
         options: >-
           --health-cmd="pg_isready -U postgres"
           --health-interval=10s
