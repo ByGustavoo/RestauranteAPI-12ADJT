@@ -33,7 +33,7 @@ public class UsuarioService {
 
     @Transactional(readOnly = true)
     public UsuarioDTO getUsuarioByNome(String pNome) {
-        var usuario = usuarioRepository.findByNomeContainingIgnoreCase(pNome.trim()).orElseThrow(() -> new UsuarioNotFoundException("O Usuário com o nome informado não foi encontrado!"));
+        var usuario = usuarioRepository.findByNome(pNome).orElseThrow(() -> new UsuarioNotFoundException("O Usuário com o nome informado não foi encontrado!"));
 
         return new UsuarioDTO(
                 usuario.getId(),

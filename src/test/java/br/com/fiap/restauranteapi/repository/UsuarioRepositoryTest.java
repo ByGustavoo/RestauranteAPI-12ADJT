@@ -24,7 +24,7 @@ class UsuarioRepositoryTest extends AbstractTest {
 
     @Test
     void findByNomeContainingIgnoreCaseTest() {
-        var usuario = Assertions.assertDoesNotThrow(() -> usuarioRepository.findByNomeContainingIgnoreCase("João Silva"));
+        var usuario = Assertions.assertDoesNotThrow(() -> usuarioRepository.findByNome("João Silva"));
 
         Assertions.assertNotNull(usuario);
         Assertions.assertTrue(usuario.isPresent());

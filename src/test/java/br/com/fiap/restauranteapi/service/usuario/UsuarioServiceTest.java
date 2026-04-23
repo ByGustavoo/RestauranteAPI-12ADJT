@@ -62,4 +62,10 @@ class UsuarioServiceTest extends AbstractTest {
         Assertions.assertNotNull(usuario);
         Assertions.assertEquals("João Silva", usuario.nome());
     }
+
+    @Test
+    @Order(7)
+    void getUsuarioByNomeExceptionTest() {
+        Assertions.assertThrows(UsuarioNotFoundException.class, () -> usuarioService.getUsuarioByNome("Nome Inexistente"));
+    }
 }
