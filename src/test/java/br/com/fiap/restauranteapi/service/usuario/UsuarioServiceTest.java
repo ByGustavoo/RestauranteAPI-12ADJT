@@ -6,30 +6,16 @@ import br.com.fiap.restauranteapi.exceptions.UsuarioNotFoundException;
 import br.com.fiap.restauranteapi.model.dto.usuario.CreateUsuarioDTO;
 import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
 @SpringBootTest
 class UsuarioServiceTest extends AbstractTest {
 
-    private String usuario;
-
     @Autowired
     private UsuarioService usuarioService;
-
-    @BeforeEach
-    void setUp() throws IOException {
-        if (usuario == null) {
-            usuario = new String(Files.readAllBytes(Paths.get("src/test/resources/usuario/usuario.json")));
-        }
-    }
 
     @Test
     @Order(1)
