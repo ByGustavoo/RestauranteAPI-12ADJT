@@ -1,11 +1,11 @@
 package br.com.fiap.restauranteapi.exceptions.handler;
 
-import br.com.fiap.restauranteapi.exceptions.DuplicateResourceException;
 import br.com.fiap.restauranteapi.exceptions.InvalidPasswordException;
 import br.com.fiap.restauranteapi.exceptions.UsuarioNotFoundException;
 import br.com.fiap.restauranteapi.exceptions.dto.ErrorResponseDTO;
 import br.com.fiap.restauranteapi.exceptions.dto.MethodArgumentNotValidResponseDTO;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -54,18 +54,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(response);
     }
 
-    @ExceptionHandler(DuplicateResourceException.class)
-    public ResponseEntity<ErrorResponseDTO> handleDuplicateResourceException(DuplicateResourceException ex) {
-
-        var response = new ErrorResponseDTO(
-                HttpStatus.CONFLICT.value(),
-                HttpStatus.CONFLICT.getReasonPhrase(),
-                "A requisição contém dados inválidos!",
-                ex.getMessage());
-
-        return ResponseEntity.status(HttpStatus.CONFLICT.value()).body(response);
-    }
-
     @ExceptionHandler(UnsatisfiedServletRequestParameterException.class)
     public ResponseEntity<ErrorResponseDTO> handleUnsatisfiedServletRequestParameterException() {
 
@@ -88,6 +76,18 @@ public class GlobalExceptionHandler {
                 String.format(
                         "O parâmetro '%s' não foi informado na requisição!",
                         ex.getVariableName()));
+
+        return ResponseEntity.badRequest().body(response);
+    }
+
+    @ExceptionHandler(InvalidPasswordException.class)
+    public ResponseEntity<ErrorResponseDTO> handleInvalidPasswordException(InvalidPasswordException ex) {
+
+        var response = new ErrorResponseDTO(
+                HttpStatus.BAD_REQUEST.value(),
+                HttpStatus.BAD_REQUEST.getReasonPhrase(),
+                "Senha incorreta!",
+                ex.getMessage());
 
         return ResponseEntity.badRequest().body(response);
     }
@@ -116,16 +116,16 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
 
-    @ExceptionHandler(InvalidPasswordException.class)
-    public ResponseEntity<ErrorResponseDTO> handleInvalidPasswordException(InvalidPasswordException ex) {
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<ErrorResponseDTO> handleDuplicateResourceException(DataIntegrityViolationException ex) {
 
         var response = new ErrorResponseDTO(
-                HttpStatus.BAD_REQUEST.value(),
-                HttpStatus.BAD_REQUEST.getReasonPhrase(),
-                "Senha incorreta!",
+                HttpStatus.CONFLICT.value(),
+                HttpStatus.CONFLICT.getReasonPhrase(),
+                "A requisição contém dados inválidos!",
                 ex.getMessage());
 
-        return ResponseEntity.badRequest().body(response);
+        return ResponseEntity.status(HttpStatus.CONFLICT.value()).body(response);
     }
 
     @ExceptionHandler(Exception.class)

@@ -1,7 +1,6 @@
 package br.com.fiap.restauranteapi.service.usuario;
 
 import br.com.fiap.restauranteapi.config.AbstractTest;
-import br.com.fiap.restauranteapi.exceptions.DuplicateResourceException;
 import br.com.fiap.restauranteapi.exceptions.UsuarioNotFoundException;
 import br.com.fiap.restauranteapi.model.dto.usuario.CreateUsuarioDTO;
 import jakarta.persistence.EntityNotFoundException;
@@ -10,6 +9,7 @@ import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.dao.DataIntegrityViolationException;
 
 @SpringBootTest
 class UsuarioServiceTest extends AbstractTest {
@@ -92,11 +92,11 @@ class UsuarioServiceTest extends AbstractTest {
         var emailDuplicado = buildUsuario(
                 "joao",
                 "joao@email.com",
-                "joao_user01",
+                "joao__user01",
                 "senha@123456",
                 1);
 
-        Assertions.assertThrows(DuplicateResourceException.class, () -> usuarioService.salvarUsuario(emailDuplicado));
+        Assertions.assertThrows(DataIntegrityViolationException.class, () -> usuarioService.salvarUsuario(emailDuplicado));
     }
 
     @Test
@@ -110,7 +110,7 @@ class UsuarioServiceTest extends AbstractTest {
                 "senha@1234567",
                 2);
 
-        Assertions.assertThrows(DuplicateResourceException.class, () -> usuarioService.salvarUsuario(loginDuplicado));
+        Assertions.assertThrows(DataIntegrityViolationException.class, () -> usuarioService.salvarUsuario(loginDuplicado));
     }
 
     private CreateUsuarioDTO buildUsuario(String nome, String email, String login, String senha, Integer tipoUsuario) {

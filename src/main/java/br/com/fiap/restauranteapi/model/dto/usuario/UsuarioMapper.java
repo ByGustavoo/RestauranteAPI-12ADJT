@@ -11,8 +11,8 @@ public interface UsuarioMapper {
     @Mapping(target = "senha", ignore = true)
     @Mapping(target = "enderecos", ignore = true)
     @Mapping(target = "tipoUsuario", ignore = true)
-    @Mapping(target = "situacaoCadastro.id", constant = "1")
-    @Mapping(target = "dataAlteracao", expression = "java(java.time.LocalDate.now())")
+    @Mapping(target = "dataAlteracao", ignore = true)
+    @Mapping(target = "situacaoCadastro.id", ignore = true)
     Usuario fromCreateDTOToEntity(CreateUsuarioDTO createUsuarioDTO);
 
 }
