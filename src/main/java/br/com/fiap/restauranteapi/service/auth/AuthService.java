@@ -35,12 +35,20 @@ public class AuthService {
     public MensagemSucessoResponse alterarSenha(AlterarSenhaRequest pAlterarSenhaRequest) {
         var usuario = getUsuarioByLogin(pAlterarSenhaRequest.login());
 
-        if (!passwordEncoder.matches(pAlterarSenhaRequest.senhaAntiga(), usuario.getSenha())) {
+        if (!passwordEncoder.matches(pAlterarSenhaRequest.senhaAtual(), usuario.getSenha())) {
             throw new InvalidPasswordException("Não foi possível alterar a senha, a senha atual informada está incorreta!");
         }
 
         usuario.setSenha(passwordEncoder.encode(pAlterarSenhaRequest.senhaNova()));
         return new MensagemSucessoResponse(HttpStatus.OK.value(), "Senha alterada com sucesso!");
+    }
+
+    public String encriptografarSenha(String pSenha) {
+        if (pSenha == null || pSenha.isBlank()) {
+            throw new IllegalArgumentException("A senha não pode ser nula ou vazia!");
+        }
+
+        return passwordEncoder.encode(pSenha);
     }
 
     private Usuario getUsuarioByLogin(String pLogin) {

@@ -1,5 +1,6 @@
 package br.com.fiap.restauranteapi.exceptions.handler;
 
+import br.com.fiap.restauranteapi.exceptions.DuplicateResourceException;
 import br.com.fiap.restauranteapi.exceptions.InvalidPasswordException;
 import br.com.fiap.restauranteapi.exceptions.UsuarioNotFoundException;
 import br.com.fiap.restauranteapi.exceptions.dto.ErrorResponseDTO;
@@ -51,6 +52,18 @@ public class GlobalExceptionHandler {
                 ex.getMostSpecificCause().getMessage());
 
         return ResponseEntity.badRequest().body(response);
+    }
+
+    @ExceptionHandler(DuplicateResourceException.class)
+    public ResponseEntity<ErrorResponseDTO> handleDuplicateResourceException(DuplicateResourceException ex) {
+
+        var response = new ErrorResponseDTO(
+                HttpStatus.CONFLICT.value(),
+                HttpStatus.CONFLICT.getReasonPhrase(),
+                "A requisição contém dados inválidos!",
+                ex.getMessage());
+
+        return ResponseEntity.status(HttpStatus.CONFLICT.value()).body(response);
     }
 
     @ExceptionHandler(UnsatisfiedServletRequestParameterException.class)
