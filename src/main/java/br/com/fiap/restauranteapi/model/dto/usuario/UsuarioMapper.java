@@ -8,7 +8,9 @@ import org.mapstruct.Mapping;
 public interface UsuarioMapper {
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "dataAlteracao", expression = "java(java.time.LocalDateTime.now())")
+    @Mapping(target = "senha", ignore = true)
+    @Mapping(target = "tipoUsuario", ignore = true)
+    @Mapping(target = "dataAlteracao", expression = "java(java.time.LocalDate.now())")
     Usuario fromCreateDTOToEntity(CreateUsuarioDTO createUsuarioDTO);
 
 }

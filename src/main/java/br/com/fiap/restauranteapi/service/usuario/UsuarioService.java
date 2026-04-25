@@ -9,10 +9,9 @@ import br.com.fiap.restauranteapi.model.entity.usuario.Usuario;
 import br.com.fiap.restauranteapi.model.response.MensagemSucessoResponse;
 import br.com.fiap.restauranteapi.repository.tipousuario.TipoUsuarioRepository;
 import br.com.fiap.restauranteapi.repository.usuario.UsuarioRepository;
-import br.com.fiap.restauranteapi.service.auth.AuthService;
+import br.com.fiap.restauranteapi.service.auth.PasswordService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,9 +19,9 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class UsuarioService {
 
-    private final AuthService authService;
-
     private final UsuarioMapper usuarioMapper;
+
+    private final PasswordService passwordService;
 
     private final UsuarioRepository usuarioRepository;
 
@@ -71,7 +70,7 @@ public class UsuarioService {
         }
 
         var usuario = usuarioMapper.fromCreateDTOToEntity(pCreateUsuarioDTO);
-        usuario.setSenha(authService.encriptografarSenha(pCreateUsuarioDTO.senha()));
+        usuario.setSenha(passwordService.encriptografarSenha(pCreateUsuarioDTO.senha()));
         usuario.setTipoUsuario(tipoUsuarioRepository.getReferenceById(pCreateUsuarioDTO.tipoUsuario()));
 
         usuarioRepository.save(usuario);

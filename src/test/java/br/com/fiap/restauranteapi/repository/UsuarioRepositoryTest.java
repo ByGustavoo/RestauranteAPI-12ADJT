@@ -30,4 +30,9 @@ class UsuarioRepositoryTest extends AbstractTest {
         Assertions.assertTrue(usuario.isPresent());
         Assertions.assertEquals("João Silva", usuario.get().getNome());
     }
+
+    @Test
+    void existsByEmailIgnoreCaseTest() {
+        Assertions.assertDoesNotThrow(() -> usuarioRepository.existsByEmailIgnoreCase("joao@email.com"));
+    }
 }
