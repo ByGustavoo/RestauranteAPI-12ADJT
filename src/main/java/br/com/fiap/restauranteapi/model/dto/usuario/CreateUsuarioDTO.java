@@ -7,28 +7,28 @@ import jakarta.validation.constraints.*;
 public record CreateUsuarioDTO(
 
         @NotBlank(message = "O campo 'nome' é obrigatório!")
-        @Schema(description = "Nome do usuário", example = "João Silva")
+        @Schema(description = "Nome do usuário")
         String nome,
 
+        @Schema(description = "E-mail do usuário")
         @NotBlank(message = "O campo 'email' é obrigatório!")
-        @Schema(description = "E-mail do usuário", example = "joao@email.com")
         @Email(message = "O campo 'email' deve ser um endereço de e-mail válido!")
         String email,
 
+        @Schema(description = "Login do usuário")
         @NotBlank(message = "O campo 'login' é obrigatório!")
-        @Schema(description = "Login do usuário", example = "joao_silva")
         @Size(min = 10, max = 20, message = "O Login deve ter entre 10 e 20 caracteres!")
         String login,
 
+        @Schema(description = "Senha do usuário")
         @NotBlank(message = "O campo 'senha' é obrigatório!")
-        @Schema(description = "Senha do usuário", example = "joao@1234")
         @Size(min = 12, message = "A senha deve ter no mínimo 12 caracteres!")
         String senha,
 
-        @Min(value = 1, message = "Tipo de usuário inválido!")
-        @Max(value = 2, message = "Tipo de usuário inválido!")
+        @Min(value = 1, message = "Tipo de Usuário inválido!")
+        @Max(value = 2, message = "Tipo de Usuário inválido!")
         @NotNull(message = "O campo 'tipoUsuario' é obrigatório!")
-        @Schema(description = "Tipo de usuário no sistema: 1 = DONO, 2 = CLIENTE", example = "1", allowableValues = {"1", "2"})
+        @Schema(description = "Tipo de usuário no sistema: 1 = DONO, 2 = CLIENTE", example = "1")
         Integer tipoUsuario
 
 ) {}
