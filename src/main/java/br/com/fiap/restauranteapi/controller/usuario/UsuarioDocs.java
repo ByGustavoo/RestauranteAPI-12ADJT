@@ -1,7 +1,9 @@
 package br.com.fiap.restauranteapi.controller.usuario;
 
 import br.com.fiap.restauranteapi.exceptions.dto.ErrorResponseDTO;
+import br.com.fiap.restauranteapi.model.dto.usuario.CreateUsuarioDTO;
 import br.com.fiap.restauranteapi.model.dto.usuario.UsuarioDTO;
+import br.com.fiap.restauranteapi.model.response.MensagemSucessoResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -9,9 +11,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Tag(name = "Usuário", description = "Endpoints relacionados ao gerenciamento de usuários")
@@ -38,5 +43,28 @@ public interface UsuarioDocs {
     })
     @GetMapping(params = "nome")
     ResponseEntity<UsuarioDTO> getUsuarioByNome(@Parameter(description = "Nome do usuário para consulta.", example = "João Silva", required = true) @RequestParam @NotBlank String nome);
+
+
+    @Operation(summary = "Cadastrar um usuário", description = "Realiza o cadastro de um novo usuário no sistema com base nos dados informados no corpo da requisição.")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "201",
+                    description = "Usuário cadastrado com sucesso!",
+                    content = @Content(schema = @Schema(implementation = MensagemSucessoResponse.class))),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Dados inválidos na requisição!",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
+            @ApiResponse(
+                    responseCode = "409",
+                    description = "E-mail ou login já cadastrado no sistema!",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Erro interno do servidor!",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class)))
+    })
+    @PostMapping
+    ResponseEntity<MensagemSucessoResponse> cadastrarUsuario(@RequestBody @Valid CreateUsuarioDTO createUsuarioDTO);
 
 }

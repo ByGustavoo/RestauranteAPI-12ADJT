@@ -1,10 +1,19 @@
 package br.com.fiap.restauranteapi.service.usuario;
 
+import br.com.fiap.restauranteapi.enums.ESituacaoCadastro;
 import br.com.fiap.restauranteapi.exceptions.UsuarioNotFoundException;
+import br.com.fiap.restauranteapi.model.dto.usuario.CreateUsuarioDTO;
 import br.com.fiap.restauranteapi.model.dto.usuario.UsuarioDTO;
+import br.com.fiap.restauranteapi.model.dto.usuario.UsuarioMapper;
 import br.com.fiap.restauranteapi.model.entity.usuario.Usuario;
+import br.com.fiap.restauranteapi.model.response.MensagemSucessoResponse;
+import br.com.fiap.restauranteapi.repository.situacaocadastro.SituacaoCadastroRepository;
+import br.com.fiap.restauranteapi.repository.tipousuario.TipoUsuarioRepository;
 import br.com.fiap.restauranteapi.repository.usuario.UsuarioRepository;
+import br.com.fiap.restauranteapi.service.auth.PasswordService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,7 +21,15 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class UsuarioService {
 
+    private final UsuarioMapper usuarioMapper;
+
+    private final PasswordService passwordService;
+
     private final UsuarioRepository usuarioRepository;
+
+    private final TipoUsuarioRepository tipoUsuarioRepository;
+
+    private final SituacaoCadastroRepository situacaoCadastroRepository;
 
     public Usuario getUsuarioByLogin(String pLogin) {
         return usuarioRepository.findByLogin(pLogin).orElseThrow(() -> new UsuarioNotFoundException("O Usuário com o login informado não foi encontrado!"));
@@ -26,6 +43,7 @@ public class UsuarioService {
                 usuario.getId(),
                 usuario.getNome(),
                 usuario.getEmail(),
+                usuario.getLogin(),
                 usuario.getTipoUsuario().getDescricao(),
                 usuario.getSituacaoCadastro().getDescricao(),
                 usuario.getDataAlteracao());
@@ -39,8 +57,28 @@ public class UsuarioService {
                 usuario.getId(),
                 usuario.getNome(),
                 usuario.getEmail(),
+                usuario.getLogin(),
                 usuario.getTipoUsuario().getDescricao(),
                 usuario.getSituacaoCadastro().getDescricao(),
                 usuario.getDataAlteracao());
+    }
+
+    @Transactional
+    public MensagemSucessoResponse salvarUsuario(CreateUsuarioDTO pCreateUsuarioDTO) {
+        if (usuarioRepository.existsByEmailIgnoreCase(pCreateUsuarioDTO.email())) {
+            throw new DataIntegrityViolationException("O E-mail informado já está cadastrado no sistema!");
+        }
+
+        if (usuarioRepository.existsByLoginIgnoreCase(pCreateUsuarioDTO.login())) {
+            throw new DataIntegrityViolationException("O Login informado já está cadastrado no sistema!");
+        }
+
+        var usuario = usuarioMapper.fromCreateDTOToEntity(pCreateUsuarioDTO);
+        usuario.setSenha(passwordService.encriptografarSenha(pCreateUsuarioDTO.senha()));
+        usuario.setTipoUsuario(tipoUsuarioRepository.getReferenceById(pCreateUsuarioDTO.tipoUsuario()));
+        usuario.setSituacaoCadastro(situacaoCadastroRepository.getReferenceById(ESituacaoCadastro.ATIVO.getCodigo()));
+
+        usuarioRepository.save(usuario);
+        return new MensagemSucessoResponse(HttpStatus.CREATED.value(), "Usuário cadastrado com sucesso!");
     }
 }
