@@ -20,7 +20,7 @@ class AuthServiceTest extends AbstractTest {
     @Test
     @Order(1)
     void autenticarUsuarioTest() {
-        Assertions.assertDoesNotThrow(() -> authService.autenticarUsuario(new LoginRequest("joao", "SenhaTeste@2026")));
+        Assertions.assertDoesNotThrow(() -> authService.autenticarUsuario(new LoginRequest("joao_user01", "SenhaTeste@2026")));
     }
 
     @Test
@@ -32,24 +32,24 @@ class AuthServiceTest extends AbstractTest {
     @Test
     @Order(3)
     void autenticarUsuarioSenhaExceptionTest() {
-        Assertions.assertThrows(InvalidPasswordException.class, () -> authService.autenticarUsuario(new LoginRequest("joao", "SenhaErrada@2026")));
+        Assertions.assertThrows(InvalidPasswordException.class, () -> authService.autenticarUsuario(new LoginRequest("joao_user01", "SenhaErrada@2026")));
     }
 
     @Test
     @Order(4)
     void alterarSenhaTest() {
-        Assertions.assertDoesNotThrow(() -> authService.alterarSenha(new AlterarSenhaRequest("joao", "SenhaTeste@2026", "123456789@")));
+        Assertions.assertDoesNotThrow(() -> authService.alterarSenha(new AlterarSenhaRequest("joao_user01", "SenhaTeste@2026", "123456789@2026")));
     }
 
     @Test
     @Order(5)
     void alterarSenhaLoginExceptionTest() {
-        Assertions.assertThrows(UsuarioNotFoundException.class, () -> authService.alterarSenha(new AlterarSenhaRequest("loginErrado", "SenhaTeste@2026", "123456789@")));
+        Assertions.assertThrows(UsuarioNotFoundException.class, () -> authService.alterarSenha(new AlterarSenhaRequest("loginErrado", "SenhaTeste@2026", "123456789@2026")));
     }
 
     @Test
     @Order(6)
     void alterarSenhaSenhaExceptionTest() {
-        Assertions.assertThrows(InvalidPasswordException.class, () -> authService.alterarSenha(new AlterarSenhaRequest("joao", "SenhaErrada@2026", "123456789@")));
+        Assertions.assertThrows(InvalidPasswordException.class, () -> authService.alterarSenha(new AlterarSenhaRequest("joao_user01", "SenhaErrada@2026", "123456789@2026")));
     }
 }

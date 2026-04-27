@@ -13,11 +13,15 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
     Optional<Usuario> findByLogin(String login);
 
+    boolean existsByLoginIgnoreCase(String login);
+
     @Query("""
             SELECT u
             FROM Usuario u
             WHERE LOWER(REPLACE(u.nome, ' ', '')) = LOWER(REPLACE(:nome, ' ', ''))
             """)
     Optional<Usuario> findByNome(@Param("nome") String nome);
+
+    boolean existsByEmailIgnoreCase(String email);
 
 }

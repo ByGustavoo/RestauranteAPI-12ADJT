@@ -4,20 +4,22 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-@Schema(description = "Request para solicitação de alteração de senha")
+@Schema(description = "Request para solicitação de alteração de senha do Usuário")
 public record AlterarSenhaRequest(
 
         @NotBlank(message = "O campo 'login' é obrigatório!")
-        @Schema(description = "Login do Usuário", example = "usuario123")
+        @Schema(description = "Login do usuário", example = "usuario123")
+        @Size(min = 10, max = 20, message = "O Login deve ter entre 10 e 20 caracteres!")
         String login,
 
-        @NotBlank(message = "O campo 'senhaAntiga' é obrigatório!")
-        @Schema(description = "Senha atual do Usuário", example = "senhaAntiga123")
-        String senhaAntiga,
+        @NotBlank(message = "O campo 'senhaAtual' é obrigatório!")
+        @Schema(description = "Senha atual do usuário", example = "senhaAntiga123")
+        @Size(min = 12, message = "A senha atual deve ter no mínimo 12 caracteres!")
+        String senhaAtual,
 
         @NotBlank(message = "O campo 'senhaNova' é obrigatório!")
-        @Size(min = 10, message = "A nova senha deve ter no mínimo 10 caracteres!")
-        @Schema(description = "Nova senha do Usuário", example = "novaSenha@123", minLength = 10)
+        @Schema(description = "Nova senha do usuário", example = "novaSenha@123")
+        @Size(min = 12, message = "A nova senha deve ter no mínimo 12 caracteres!")
         String senhaNova
 
 ) {}

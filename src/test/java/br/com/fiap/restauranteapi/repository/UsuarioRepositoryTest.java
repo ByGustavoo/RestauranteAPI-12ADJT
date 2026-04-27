@@ -15,11 +15,11 @@ class UsuarioRepositoryTest extends AbstractTest {
 
     @Test
     void findByLoginTest() {
-        var usuario = Assertions.assertDoesNotThrow(() -> usuarioRepository.findByLogin("joao"));
+        var usuario = Assertions.assertDoesNotThrow(() -> usuarioRepository.findByLogin("joao_user01"));
 
         Assertions.assertNotNull(usuario);
         Assertions.assertTrue(usuario.isPresent());
-        Assertions.assertEquals("joao", usuario.get().getLogin());
+        Assertions.assertEquals("joao_user01", usuario.get().getLogin());
     }
 
     @Test
@@ -29,5 +29,14 @@ class UsuarioRepositoryTest extends AbstractTest {
         Assertions.assertNotNull(usuario);
         Assertions.assertTrue(usuario.isPresent());
         Assertions.assertEquals("João Silva", usuario.get().getNome());
+    }
+
+    @Test
+    void existsByEmailIgnoreCaseTest() {
+        var emailExistente = Assertions.assertDoesNotThrow(() -> usuarioRepository.existsByEmailIgnoreCase("joao@email.com"));
+        var emailInexistente = Assertions.assertDoesNotThrow(() -> usuarioRepository.existsByEmailIgnoreCase("inexistente@email.com"));
+
+        Assertions.assertEquals(Boolean.TRUE, emailExistente);
+        Assertions.assertNotEquals(Boolean.TRUE, emailInexistente);
     }
 }
