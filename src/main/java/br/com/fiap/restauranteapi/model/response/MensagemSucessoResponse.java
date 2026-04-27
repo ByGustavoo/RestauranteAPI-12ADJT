@@ -8,14 +8,14 @@ import java.time.LocalDateTime;
 @Schema(description = "Resposta padrão indicando que a operação foi concluída com sucesso.")
 public record MensagemSucessoResponse(
 
-        @Schema(description = "Código HTTP da resposta", example = "200")
+        @Schema(description = "Código HTTP da resposta")
         int status,
 
+        @Schema(description = "Data e hora da resposta")
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy - HH:mm:ss")
-        @Schema(description = "Data e hora da resposta", example = "15/04/2026 - 20:45:00")
         LocalDateTime timestamp,
 
-        @Schema(description = "Mensagem de sucesso", example = "Senha alterada com sucesso!")
+        @Schema(description = "Mensagem de sucesso")
         String mensagem
 
 ) {

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@Tag(name = "Auth", description = "Endpoints relacionados à autenticação e gerenciamento de credenciais")
+@Tag(name = "Auth", description = "Endpoints relacionados à autenticação e gerenciamento de credenciais dos Usuários")
 public interface AuthDocs {
 
     @Operation(summary = "Realizar o login", description = "Realiza a autenticação do usuário informando login e senha válidos.")
@@ -46,7 +46,7 @@ public interface AuthDocs {
     @PostMapping("/login")
     ResponseEntity<MensagemSucessoResponse> login(@RequestBody @Valid LoginRequest pLoginRequest);
 
-    @Operation(summary = "Alterar senha do usuário", description = "Permite alterar a senha do usuário informando login, senha atual e nova senha.")
+    @Operation(summary = "Alterar senha do usuário", description = "Permite alterar a senha do usuário informando login, senha atual e a senha nova.")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",

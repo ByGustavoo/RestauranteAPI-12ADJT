@@ -6,8 +6,8 @@ import jakarta.validation.constraints.*;
 @Schema(description = "Modelo utilizado para criação de um Usuário")
 public record CreateUsuarioDTO(
 
-        @NotBlank(message = "O campo 'nome' é obrigatório!")
         @Schema(description = "Nome do usuário")
+        @NotBlank(message = "O campo 'nome' é obrigatório!")
         String nome,
 
         @Schema(description = "E-mail do usuário")

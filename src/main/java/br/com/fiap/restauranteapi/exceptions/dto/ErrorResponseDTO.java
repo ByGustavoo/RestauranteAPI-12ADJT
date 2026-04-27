@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.v3.oas.annotations.media.Schema;
 
+import java.net.URI;
 import java.time.LocalDateTime;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -31,7 +32,7 @@ public record ErrorResponseDTO(
 
 ) {
     public ErrorResponseDTO(int pStatus, String pTitle, String pDetails, String pInstance) {
-        this(pStatus, pTitle, pDetails, pInstance, LocalDateTime.now(), null);
+        this(pStatus, pTitle, pDetails, String.valueOf(URI.create(pInstance)), LocalDateTime.now(), null);
     }
 
     public ErrorResponseDTO(int pStatus, String pTitle, String pDetails, String pInstance, Object pErrors) {
