@@ -2,12 +2,12 @@ package br.com.fiap.restauranteapi.exceptions.handler;
 
 import br.com.fiap.restauranteapi.exceptions.InvalidPasswordException;
 import br.com.fiap.restauranteapi.exceptions.UsuarioNotFoundException;
-import br.com.fiap.restauranteapi.exceptions.dto.ErrorResponseDTO;
 import br.com.fiap.restauranteapi.exceptions.dto.MethodArgumentNotValidResponseDTO;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.ProblemDetail;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingPathVariableException;
@@ -15,128 +15,127 @@ import org.springframework.web.bind.UnsatisfiedServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.HandlerMethodValidationException;
+import java.net.URI;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(HandlerMethodValidationException.class)
-    public ResponseEntity<ErrorResponseDTO> handleHandlerMethodValidationException() {
+    public ProblemDetail handleHandlerMethodValidationException(HttpServletRequest pHttpServletRequest) {
+        var problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
 
-        var response = new ErrorResponseDTO(
-                HttpStatus.BAD_REQUEST.value(),
-                HttpStatus.BAD_REQUEST.getReasonPhrase(),
-                "Parâmetros Inválidos!",
-                "Verifique os dados informados na requisição e tenta novamente!");
+        problemDetail.setTitle("Parâmetros Inválidos!");
+        problemDetail.setDetail("Verifique os dados informados na requisição e tente novamente.");
+        problemDetail.setInstance(URI.create(pHttpServletRequest.getRequestURI()));
 
-        return ResponseEntity.badRequest().body(response);
+        return problemDetail;
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<?> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+    public ProblemDetail handleMethodArgumentNotValidException(MethodArgumentNotValidException ex, HttpServletRequest pHttpServletRequest) {
+        var problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
 
-        var erros = ex.getFieldErrors()
+        problemDetail.setTitle("Erro de Validação!");
+        problemDetail.setDetail("A requisição contém dados inválidos.");
+        problemDetail.setInstance(URI.create(pHttpServletRequest.getRequestURI()));
+
+        var errors = ex.getFieldErrors()
                 .stream()
-                .map(MethodArgumentNotValidResponseDTO::new)
+                .map(fieldError -> new MethodArgumentNotValidResponseDTO(
+                        fieldError.getField(),
+                        fieldError.getDefaultMessage()))
                 .toList();
 
-        return ResponseEntity.badRequest().body(erros);
+        problemDetail.setProperty("errors", errors);
+
+        return problemDetail;
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<ErrorResponseDTO> handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
+    public ProblemDetail handleHttpMessageNotReadableException(HttpMessageNotReadableException ex, HttpServletRequest pHttpServletRequest) {
+        var problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
 
-        var response = new ErrorResponseDTO(
-                HttpStatus.BAD_REQUEST.value(),
-                HttpStatus.BAD_REQUEST.getReasonPhrase(),
-                "A requisição contém dados inválidos!",
-                ex.getMostSpecificCause().getMessage());
+        problemDetail.setTitle("Requisição Inválida!");
+        problemDetail.setDetail(ex.getMostSpecificCause().getMessage());
+        problemDetail.setInstance(URI.create(pHttpServletRequest.getRequestURI()));
 
-        return ResponseEntity.badRequest().body(response);
+        return problemDetail;
     }
 
     @ExceptionHandler(UnsatisfiedServletRequestParameterException.class)
-    public ResponseEntity<ErrorResponseDTO> handleUnsatisfiedServletRequestParameterException() {
+    public ProblemDetail handleUnsatisfiedServletRequestParameterException(HttpServletRequest pHttpServletRequest) {
+        var problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
 
-        var response = new ErrorResponseDTO(
-                HttpStatus.BAD_REQUEST.value(),
-                HttpStatus.BAD_REQUEST.getReasonPhrase(),
-                "Parâmetros Inválidos!",
-                "Verifique os dados informados na requisição e tenta novamente!");
+        problemDetail.setTitle("Parâmetros Inválidos!");
+        problemDetail.setDetail("Verifique os dados informados na requisição e tenta novamente.");
+        problemDetail.setInstance(URI.create(pHttpServletRequest.getRequestURI()));
 
-        return ResponseEntity.badRequest().body(response);
+        return problemDetail;
     }
 
     @ExceptionHandler(MissingPathVariableException.class)
-    public ResponseEntity<ErrorResponseDTO> handleMissingPathVariableException(MissingPathVariableException ex) {
+    public ProblemDetail handleMissingPathVariableException(MissingPathVariableException ex, HttpServletRequest pHttpServletRequest) {
+        var problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
 
-        var response = new ErrorResponseDTO(
-                HttpStatus.BAD_REQUEST.value(),
-                HttpStatus.BAD_REQUEST.getReasonPhrase(),
-                "Parâmetro não informado!",
-                String.format(
-                        "O parâmetro '%s' não foi informado na requisição!",
-                        ex.getVariableName()));
+        problemDetail.setTitle("Parâmetro não informado!");
+        problemDetail.setDetail("O parâmetro '" + ex.getVariableName() + "' não foi informado na requisição!");
+        problemDetail.setInstance(URI.create(pHttpServletRequest.getRequestURI()));
 
-        return ResponseEntity.badRequest().body(response);
+        return problemDetail;
     }
 
     @ExceptionHandler(InvalidPasswordException.class)
-    public ResponseEntity<ErrorResponseDTO> handleInvalidPasswordException(InvalidPasswordException ex) {
+    public ProblemDetail handleInvalidPasswordException(InvalidPasswordException ex, HttpServletRequest pHttpServletRequest) {
+        var problemDetail = ProblemDetail.forStatus(HttpStatus.BAD_REQUEST);
 
-        var response = new ErrorResponseDTO(
-                HttpStatus.BAD_REQUEST.value(),
-                HttpStatus.BAD_REQUEST.getReasonPhrase(),
-                "Senha incorreta!",
-                ex.getMessage());
+        problemDetail.setTitle("Senha Incorreta!");
+        problemDetail.setDetail(ex.getMessage());
+        problemDetail.setInstance(URI.create(pHttpServletRequest.getRequestURI()));
 
-        return ResponseEntity.badRequest().body(response);
+        return problemDetail;
     }
 
     @ExceptionHandler(UsuarioNotFoundException.class)
-    public ResponseEntity<ErrorResponseDTO> handleUsuarioNotFoundException(UsuarioNotFoundException ex) {
+    public ProblemDetail handleUsuarioNotFoundException(UsuarioNotFoundException ex, HttpServletRequest pHttpServletRequest) {
+        var problemDetail = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
 
-        var response = new ErrorResponseDTO(
-                HttpStatus.NOT_FOUND.value(),
-                HttpStatus.NOT_FOUND.getReasonPhrase(),
-                "Registro não encontrado!",
-                ex.getMessage());
+        problemDetail.setTitle("Usuário não encontrado!");
+        problemDetail.setDetail(ex.getMessage());
+        problemDetail.setInstance(URI.create(pHttpServletRequest.getRequestURI()));
 
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        return problemDetail;
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<ErrorResponseDTO> handleEntityNotFoundException() {
+    public ProblemDetail handleEntityNotFoundException(HttpServletRequest pHttpServletRequest) {
+        var problemDetail = ProblemDetail.forStatus(HttpStatus.NOT_FOUND);
 
-        var response = new ErrorResponseDTO(
-                HttpStatus.NOT_FOUND.value(),
-                HttpStatus.NOT_FOUND.getReasonPhrase(),
-                "Registro não encontrado!",
-                "Não foi possível localizar um registro com o ID informado!");
+        problemDetail.setTitle("Registro não encontrado!");
+        problemDetail.setDetail("Não foi possível localizar um registro com o ID informado!");
+        problemDetail.setInstance(URI.create(pHttpServletRequest.getRequestURI()));
 
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        return problemDetail;
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity<ErrorResponseDTO> handleDuplicateResourceException(DataIntegrityViolationException ex) {
+    public ProblemDetail handleDuplicateResourceException(DataIntegrityViolationException ex, HttpServletRequest pHttpServletRequest) {
+        var problemDetail = ProblemDetail.forStatus(HttpStatus.CONFLICT);
 
-        var response = new ErrorResponseDTO(
-                HttpStatus.CONFLICT.value(),
-                HttpStatus.CONFLICT.getReasonPhrase(),
-                "A requisição contém dados inválidos!",
-                ex.getMessage());
+        problemDetail.setTitle("Conflito de Dados!");
+        problemDetail.setDetail(ex.getMessage());
+        problemDetail.setInstance(URI.create(pHttpServletRequest.getRequestURI()));
 
-        return ResponseEntity.status(HttpStatus.CONFLICT.value()).body(response);
+        return problemDetail;
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponseDTO> handleInternalServerErrorException(Exception ex) {
+    public ProblemDetail handleInternalServerErrorException(HttpServletRequest pHttpServletRequest) {
+        var problemDetail = ProblemDetail.forStatus(HttpStatus.INTERNAL_SERVER_ERROR);
 
-        var response = new ErrorResponseDTO(
-                HttpStatus.INTERNAL_SERVER_ERROR.value(),
-                HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),
-                "Ocorreu um erro interno no servidor! Por favor, tente novamente.",
-                ex.getLocalizedMessage());
+        problemDetail.setTitle(HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase());
+        problemDetail.setDetail("Ocorreu um erro interno no servidor! Por favor, tente novamente.");
+        problemDetail.setInstance(URI.create(pHttpServletRequest.getRequestURI()));
 
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+        return problemDetail;
     }
 }
