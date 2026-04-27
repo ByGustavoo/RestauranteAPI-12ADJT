@@ -1,7 +1,6 @@
 package br.com.fiap.restauranteapi.controller.auth;
 
 import br.com.fiap.restauranteapi.exceptions.dto.ErrorResponseDTO;
-import br.com.fiap.restauranteapi.exceptions.dto.MethodArgumentNotValidResponseDTO;
 import br.com.fiap.restauranteapi.model.request.auth.AlterarSenhaRequest;
 import br.com.fiap.restauranteapi.model.request.auth.LoginRequest;
 import br.com.fiap.restauranteapi.model.response.MensagemSucessoResponse;
@@ -28,11 +27,7 @@ public interface AuthDocs {
                     content = @Content(schema = @Schema(implementation = MensagemSucessoResponse.class))),
             @ApiResponse(
                     responseCode = "400",
-                    description = "Dados inválidos!",
-                    content = @Content(schema = @Schema(implementation = MethodArgumentNotValidResponseDTO.class))),
-            @ApiResponse(
-                    responseCode = "400",
-                    description = "Senha incorreta!",
+                    description = "Dados inválidos na requisição!",
                     content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
             @ApiResponse(
                     responseCode = "404",
@@ -46,7 +41,7 @@ public interface AuthDocs {
     @PostMapping("/login")
     ResponseEntity<MensagemSucessoResponse> login(@RequestBody @Valid LoginRequest pLoginRequest);
 
-    @Operation(summary = "Alterar senha do usuário", description = "Permite alterar a senha do usuário informando login, senha atual e a senha nova.")
+    @Operation(summary = "Alterar senha do usuário", description = "Permite alterar a senha do usuário informando login, senha atual e a nova senha.")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
@@ -54,11 +49,7 @@ public interface AuthDocs {
                     content = @Content(schema = @Schema(implementation = MensagemSucessoResponse.class))),
             @ApiResponse(
                     responseCode = "400",
-                    description = "Dados inválidos!",
-                    content = @Content(schema = @Schema(implementation = MethodArgumentNotValidResponseDTO.class))),
-            @ApiResponse(
-                    responseCode = "400",
-                    description = "Senha atual incorreta!",
+                    description = "Dados inválidos na requisição!",
                     content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
             @ApiResponse(
                     responseCode = "404",

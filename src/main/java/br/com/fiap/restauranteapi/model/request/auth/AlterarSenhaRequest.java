@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
-@Schema(description = "Modelo de Request para solicitação de alteração de senha do Usuário")
+@Schema(description = "Modelo de request para solicitação de alteração de senha do Usuário")
 public record AlterarSenhaRequest(
 
         @NotBlank(message = "O campo 'login' é obrigatório!")

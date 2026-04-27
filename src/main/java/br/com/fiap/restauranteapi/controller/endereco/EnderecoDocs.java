@@ -16,7 +16,7 @@ import java.util.List;
 @Tag(name = "Endereço", description = "Endpoints relacionados aos Endereços dos Usuários")
 public interface EnderecoDocs {
 
-    @Operation(summary = "Listar endereços dos usuários")
+    @Operation(summary = "Listar endereços dos usuários", description = "Retorna uma lista de endereços vinculados aos usuários cadastrados no sistema.")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",

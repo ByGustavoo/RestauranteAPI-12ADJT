@@ -16,7 +16,7 @@ import java.util.List;
 @Tag(name = "Situação Cadastro", description = "Endpoints relacionados às Situações de Cadastro dos Usuários")
 public interface SituacaoCadastroDocs {
 
-    @Operation(summary = "Listar situações de cadastro")
+    @Operation(summary = "Listar situações de cadastro", description = "Retorna uma lista de situações de cadastro disponíveis para os usuários do sistema.")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",

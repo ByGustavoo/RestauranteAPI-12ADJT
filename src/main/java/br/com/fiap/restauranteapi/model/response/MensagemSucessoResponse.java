@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.time.LocalDateTime;
 
-@Schema(description = "Resposta padrão indicando que a operação foi concluída com sucesso.")
+@Schema(description = "Modelo de resposta padrão indicando que a operação foi concluída com sucesso.")
 public record MensagemSucessoResponse(
 
         @Schema(description = "Código HTTP da resposta")

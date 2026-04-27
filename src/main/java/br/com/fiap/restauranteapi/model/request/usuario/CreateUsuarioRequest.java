@@ -3,7 +3,7 @@ package br.com.fiap.restauranteapi.model.request.usuario;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 
-@Schema(description = "Modelo utilizado para criação de um Usuário")
+@Schema(description = "Modelo de request para criação de um Usuário")
 public record CreateUsuarioRequest(
 
         @NotBlank(message = "O campo 'nome' é obrigatório!")

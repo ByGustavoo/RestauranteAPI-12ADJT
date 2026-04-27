@@ -30,7 +30,7 @@ public interface UsuarioDocs {
                     content = @Content(schema = @Schema(implementation = UsuarioDTO.class))),
             @ApiResponse(
                     responseCode = "400",
-                    description = "Parâmetro nome inválido ou não informado!",
+                    description = "Dados inválidos na requisição!",
                     content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
             @ApiResponse(
                     responseCode = "404",

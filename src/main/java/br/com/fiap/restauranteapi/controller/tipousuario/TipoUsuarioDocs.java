@@ -16,11 +16,11 @@ import java.util.List;
 @Tag(name = "Tipo Usuário", description = "Endpoints relacionados aos Tipos de Usuários")
 public interface TipoUsuarioDocs {
 
-    @Operation(summary = "Listar tipos de usuário")
+    @Operation(summary = "Listar os tipos de usuários", description = "Retorna uma lista dos tipos de usuários disponíveis no sistema.")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
-                    description = "Lista de tipos de usuários retornada com sucesso!"),
+                    description = "Lista com os tipos de usuários retornada com sucesso!"),
             @ApiResponse(
                     responseCode = "500",
                     description = "Erro interno do servidor!",

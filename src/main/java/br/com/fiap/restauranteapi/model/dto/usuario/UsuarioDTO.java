@@ -5,7 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.time.LocalDate;
 
-@Schema(description = "Modelo utilizado para retorno dos dados de Usuário")
+@Schema(description = "Modelo de resposta com os dados de Usuário")
 public record UsuarioDTO(
 
         @Schema(description = "Identificador único do usuário")
