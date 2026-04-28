@@ -16,9 +16,9 @@ public class SituacaoCadastroService {
 
     @Transactional(readOnly = true)
     public List<SituacaoCadastroDTO> findAll() {
-        var situacaoCadastro = situacaoCadastroRepository.findAll();
+        var situacoesCadastro  = situacaoCadastroRepository.findAll();
 
-        return situacaoCadastro.stream()
+        return situacoesCadastro .stream()
                 .map(SituacaoCadastroDTO::new)
                 .toList();
     }

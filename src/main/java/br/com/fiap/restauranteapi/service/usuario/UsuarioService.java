@@ -59,7 +59,7 @@ public class UsuarioService {
             throw new DataIntegrityViolationException("O Login informado já está cadastrado no sistema!");
         }
 
-        var usuario = usuarioMapper.fromCreateDTOToEntity(pCreateUsuarioRequest);
+        var usuario = usuarioMapper.fromCreateRequestToEntity(pCreateUsuarioRequest);
         usuario.setSenha(passwordService.encriptografarSenha(pCreateUsuarioRequest.senha()));
         usuario.setTipoUsuario(tipoUsuarioRepository.getReferenceById(pCreateUsuarioRequest.tipoUsuario()));
         usuario.setSituacaoCadastro(situacaoCadastroRepository.getReferenceById(ESituacaoCadastro.ATIVO.getCodigo()));

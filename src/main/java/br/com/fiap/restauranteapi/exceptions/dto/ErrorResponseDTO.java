@@ -11,31 +11,34 @@ import java.time.LocalDateTime;
 @Schema(description = "Estrutura genérica para respostas de erro da API")
 public record ErrorResponseDTO(
 
-        @Schema(description = "Código HTTP da resposta")
+        @Schema(description = "Código HTTP")
         int status,
 
-        @Schema(description = "Título resumido do erro")
+        @Schema(description = "Título resumido")
         String title,
 
-        @Schema(description = "Detalhes adicionais do erro")
+        @Schema(description = "Endpoint da requisição")
+        String instance,
+
+        @Schema(description = "URI identificadora do tipo de erro")
+        URI type,
+
+        @Schema(description = "Mensagem detalhada")
         String detail,
 
-        @Schema(description = "Endpoint onde ocorreu o erro")
-        URI instance,
-
-        @Schema(description = "Lista de erros de validação")
+        @Schema(description = "Erros relacionados à requisição")
         Object errors,
 
-        @Schema(description = "Data e hora em que o erro ocorreu", example = "25/12/2024 - 14:30:00")
+        @Schema(description = "Data e hora do erro")
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy - HH:mm:ss")
         LocalDateTime timestamp
 
 ) {
-    public ErrorResponseDTO(int pStatus, String pTitle, String pDetails, String pInstance) {
-        this(pStatus, pTitle, pDetails, URI.create(pInstance), null, LocalDateTime.now());
+    public ErrorResponseDTO(int pStatus, String pTitle, String pInstance, String pType, String pDetail, Object pErrors) {
+        this(pStatus, pTitle, pInstance, URI.create(pType), pDetail, pErrors, LocalDateTime.now());
     }
 
-    public ErrorResponseDTO(int pStatus, String pTitle, String pDetails, String pInstance, Object pErrors) {
-        this(pStatus, pTitle, pDetails, URI.create(pInstance), pErrors, LocalDateTime.now());
+    public ErrorResponseDTO(int pStatus, String pTitle, String pInstance, String pType, String pDetail) {
+        this(pStatus, pTitle, pInstance, URI.create(pType), pDetail, null, LocalDateTime.now());
     }
 }

@@ -16,9 +16,9 @@ public class TipoUsuarioService {
 
     @Transactional(readOnly = true)
     public List<TipoUsuarioDTO> findAll() {
-        var tipoUsuario = tipoUsuarioRepository.findAll();
+        var tiposUsuario = tipoUsuarioRepository.findAll();
 
-        return tipoUsuario.stream()
+        return tiposUsuario.stream()
                 .map(TipoUsuarioDTO::new)
                 .toList();
     }
