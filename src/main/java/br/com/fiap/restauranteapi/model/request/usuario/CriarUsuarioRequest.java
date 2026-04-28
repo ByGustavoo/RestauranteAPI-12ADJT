@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 
 @Schema(description = "Modelo de request para criação de um Usuário")
-public record CreateUsuarioRequest(
+public record CriarUsuarioRequest(
 
         @NotBlank(message = "O campo 'nome' é obrigatório!")
         @Schema(description = "Nome do usuário", example = "João Silva")

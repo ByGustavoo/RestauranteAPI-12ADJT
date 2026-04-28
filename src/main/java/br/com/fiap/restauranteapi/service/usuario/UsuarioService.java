@@ -5,7 +5,7 @@ import br.com.fiap.restauranteapi.exceptions.UsuarioNotFoundException;
 import br.com.fiap.restauranteapi.model.dto.usuario.UsuarioDTO;
 import br.com.fiap.restauranteapi.model.dto.usuario.UsuarioMapper;
 import br.com.fiap.restauranteapi.model.entity.usuario.Usuario;
-import br.com.fiap.restauranteapi.model.request.usuario.CreateUsuarioRequest;
+import br.com.fiap.restauranteapi.model.request.usuario.CriarUsuarioRequest;
 import br.com.fiap.restauranteapi.model.response.success.MensagemSucessoResponse;
 import br.com.fiap.restauranteapi.repository.situacaocadastro.SituacaoCadastroRepository;
 import br.com.fiap.restauranteapi.repository.tipousuario.TipoUsuarioRepository;
@@ -50,18 +50,18 @@ public class UsuarioService {
     }
 
     @Transactional
-    public MensagemSucessoResponse salvarUsuario(CreateUsuarioRequest pCreateUsuarioRequest) {
-        if (usuarioRepository.existsByEmailIgnoreCase(pCreateUsuarioRequest.email())) {
+    public MensagemSucessoResponse salvarUsuario(CriarUsuarioRequest pCriarUsuarioRequest) {
+        if (usuarioRepository.existsByEmailIgnoreCase(pCriarUsuarioRequest.email())) {
             throw new DataIntegrityViolationException("O E-mail informado já está cadastrado no sistema!");
         }
 
-        if (usuarioRepository.existsByLoginIgnoreCase(pCreateUsuarioRequest.login())) {
+        if (usuarioRepository.existsByLoginIgnoreCase(pCriarUsuarioRequest.login())) {
             throw new DataIntegrityViolationException("O Login informado já está cadastrado no sistema!");
         }
 
-        var usuario = usuarioMapper.fromCreateRequestToEntity(pCreateUsuarioRequest);
-        usuario.setSenha(passwordService.encriptografarSenha(pCreateUsuarioRequest.senha()));
-        usuario.setTipoUsuario(tipoUsuarioRepository.getReferenceById(pCreateUsuarioRequest.tipoUsuario()));
+        var usuario = usuarioMapper.fromCreateRequestToEntity(pCriarUsuarioRequest);
+        usuario.setSenha(passwordService.encriptografarSenha(pCriarUsuarioRequest.senha()));
+        usuario.setTipoUsuario(tipoUsuarioRepository.getReferenceById(pCriarUsuarioRequest.tipoUsuario()));
         usuario.setSituacaoCadastro(situacaoCadastroRepository.getReferenceById(ESituacaoCadastro.ATIVO.getCodigo()));
 
         usuarioRepository.save(usuario);
