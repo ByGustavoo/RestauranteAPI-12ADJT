@@ -73,7 +73,7 @@ Após configuraro arquivo `.env` com as variáveis de conexão do banco de dados
 docker compose -f docker-compose-restauranteapi.yml up -d
 ```
 
-Dessa forma, a API será iniciada utilizando as variáveis definidas no arquivo `.env` e a API ficará disponível na porta `9027`.
+Dessa forma, a API será iniciada utilizando as variáveis definidas no arquivo `.env` e ficará disponível na porta `9027`.
 
 <br> 
 
