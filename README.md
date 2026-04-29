@@ -5,7 +5,7 @@
 <br> 
 
 <div align="center">
-  API que permite aos restaurantes gerenciar suas operações de forma eficiente, enquanto os clientes podem consultar informações, realizar pedidos online e deixar avaliações.
+  Turma 12ADJT – Projeto desenvolvido na pós-graduação em Arquitetura e Desenvolvimento em Java da FIAP. O objetivo deste projeto é criar um sistema robusto que permita aos restaurantes gerenciar suas operações de forma eficiente, enquanto os clientes poderão consultar informações, deixar avaliações e realizar pedidos online.
 </div> 
 
  <br> <br> 
