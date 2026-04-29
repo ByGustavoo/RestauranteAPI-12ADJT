@@ -26,7 +26,7 @@ class UsuarioControllerTest extends AbstractControllerTest {
 
     @Test
     void getUsuarioByNomeTest() throws Exception {
-        testPost("/v1/usuario/buscar", buscarUsuario);
+        testPostStatusOk("/v1/usuario/buscar", buscarUsuario);
     }
 
     @Test
