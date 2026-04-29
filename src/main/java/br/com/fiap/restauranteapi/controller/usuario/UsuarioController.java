@@ -1,6 +1,7 @@
 package br.com.fiap.restauranteapi.controller.usuario;
 
 import br.com.fiap.restauranteapi.model.dto.usuario.CreateUsuarioDTO;
+import br.com.fiap.restauranteapi.model.dto.usuario.UpdateUserDTO;
 import br.com.fiap.restauranteapi.model.dto.usuario.UsuarioDTO;
 import br.com.fiap.restauranteapi.model.response.MensagemSucessoResponse;
 import br.com.fiap.restauranteapi.service.usuario.UsuarioService;
@@ -35,4 +36,9 @@ public class UsuarioController implements UsuarioDocs {
     public ResponseEntity<MensagemSucessoResponse> cadastrarUsuario(@RequestBody @Valid CreateUsuarioDTO createUsuarioDTO) {
         return ResponseEntity.status(HttpStatus.CREATED.value()).body(usuarioService.salvarUsuario(createUsuarioDTO));
     }
+
+    @Override
+    @PutMapping("/{id}")
+    public ResponseEntity<MensagemSucessoResponse> atualizarUsuario(@PathVariable @NotNull Integer id,@RequestBody @Valid UpdateUserDTO updateUserDTO) {
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.updateUser(id, updateUserDTO));}
 }

@@ -2,6 +2,7 @@ package br.com.fiap.restauranteapi.controller.usuario;
 
 import br.com.fiap.restauranteapi.exceptions.dto.ErrorResponseDTO;
 import br.com.fiap.restauranteapi.model.dto.usuario.CreateUsuarioDTO;
+import br.com.fiap.restauranteapi.model.dto.usuario.UpdateUserDTO;
 import br.com.fiap.restauranteapi.model.dto.usuario.UsuarioDTO;
 import br.com.fiap.restauranteapi.model.response.MensagemSucessoResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -13,11 +14,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Usuário", description = "Endpoints relacionados ao gerenciamento de usuários")
 public interface UsuarioDocs {
@@ -66,5 +65,27 @@ public interface UsuarioDocs {
     })
     @PostMapping
     ResponseEntity<MensagemSucessoResponse> cadastrarUsuario(@RequestBody @Valid CreateUsuarioDTO createUsuarioDTO);
+
+
+    @Operation(summary = "Atualizar usuário por id", description = "Atualiza os dados de um usuário de acordo com o id dele.")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Usuário atualizado com sucesso!",
+                    content = @Content(schema = @Schema(implementation = UsuarioDTO.class))),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Parâmetro id inválido ou não informado!",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Usuário não encontrado!",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Erro interno do servidor!",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class)))
+    })
+    ResponseEntity<MensagemSucessoResponse> atualizarUsuario(@PathVariable (value = "id") @NotNull Integer id, @RequestBody @Valid UpdateUserDTO updateUserDTO);
 
 }

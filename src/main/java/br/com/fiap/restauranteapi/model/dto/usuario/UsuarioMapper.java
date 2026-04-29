@@ -15,4 +15,9 @@ public interface UsuarioMapper {
     @Mapping(target = "situacaoCadastro.id", ignore = true)
     Usuario fromCreateDTOToEntity(CreateUsuarioDTO createUsuarioDTO);
 
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "nome", ignore = true)
+    @Mapping(target = "email", ignore = true)
+    @Mapping(target = "situacaoCadastro", ignore = true)
+    Usuario fromCreateDTOToEntity2(UpdateUserDTO pUpdateUserDTO);
 }
