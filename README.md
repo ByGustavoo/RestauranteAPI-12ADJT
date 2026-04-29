@@ -65,8 +65,6 @@ $ Exemplo: postgres
 $ Exemplo: postgres@2026
 ```
 
-<br> 
-
 Após configuraro arquivo `.env` com as variáveis de conexão do banco de dados, execute no terminal:
 
 ```bash
