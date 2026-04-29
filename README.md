@@ -68,7 +68,7 @@ $ Exemplo: postgres
 $ Exemplo: postgres@2026
 ```
 
-> ℹ️ Importante: a variável `DATABASE__PORT` representa a porta utilizada pela aplicação para se conectar ao banco de dados dentro da rede interna do Docker.
+> ℹ️ Importante: a variável `DATABASE_PORT` representa a porta utilizada pela aplicação para se conectar ao banco de dados dentro da rede interna do Docker.
 O valor padrão é `5432`. Caso deseje alterar essa porta no arquivo  `.env`, também será necessário ajustar o arquivo `docker-compose-restauranteapi.yml`, atualizando a porta interna do container PostgreSQL para o mesmo valor configurado.
 
 ```yaml
@@ -76,7 +76,7 @@ ports:
   - "8745:5432"
 ```
 
-Se alterar `DATABASE__PORT` para `5433`, o mapeamento deverá ser ajustado para:
+Se alterar `DATABASE_PORT` para `5433`, o mapeamento deverá ser ajustado para:
 
 ```yaml
 ports:
