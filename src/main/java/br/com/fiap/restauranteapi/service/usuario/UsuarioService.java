@@ -5,6 +5,7 @@ import br.com.fiap.restauranteapi.exceptions.UsuarioNotFoundException;
 import br.com.fiap.restauranteapi.model.dto.usuario.UsuarioDTO;
 import br.com.fiap.restauranteapi.model.dto.usuario.UsuarioMapper;
 import br.com.fiap.restauranteapi.model.entity.usuario.Usuario;
+import br.com.fiap.restauranteapi.model.request.usuario.BuscarUsuarioRequest;
 import br.com.fiap.restauranteapi.model.request.usuario.CriarUsuarioRequest;
 import br.com.fiap.restauranteapi.model.response.success.MensagemSucessoResponse;
 import br.com.fiap.restauranteapi.repository.situacaocadastro.SituacaoCadastroRepository;
@@ -36,8 +37,8 @@ public class UsuarioService {
     }
 
     @Transactional(readOnly = true)
-    public UsuarioDTO getUsuarioByNome(String pNome) {
-        var usuario = usuarioRepository.findByNome(pNome).orElseThrow(() -> new UsuarioNotFoundException("O Usuário com o nome informado não foi encontrado!"));
+    public UsuarioDTO getUsuarioByNome(BuscarUsuarioRequest pBuscarUsuarioRequest) {
+        var usuario = usuarioRepository.findByNome(pBuscarUsuarioRequest.nome()).orElseThrow(() -> new UsuarioNotFoundException("O Usuário com o nome informado não foi encontrado!"));
 
         return new UsuarioDTO(
                 usuario.getId(),

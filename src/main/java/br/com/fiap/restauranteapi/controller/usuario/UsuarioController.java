@@ -1,6 +1,7 @@
 package br.com.fiap.restauranteapi.controller.usuario;
 
 import br.com.fiap.restauranteapi.model.dto.usuario.UsuarioDTO;
+import br.com.fiap.restauranteapi.model.request.usuario.BuscarUsuarioRequest;
 import br.com.fiap.restauranteapi.model.request.usuario.CriarUsuarioRequest;
 import br.com.fiap.restauranteapi.model.response.success.MensagemSucessoResponse;
 import br.com.fiap.restauranteapi.service.usuario.UsuarioService;
@@ -22,8 +23,8 @@ public class UsuarioController implements UsuarioDocs {
     private final UsuarioService usuarioService;
 
     @Override
-    public ResponseEntity<UsuarioDTO> getUsuarioByNome(@RequestParam @NotBlank String nome) {
-        return ResponseEntity.ok(usuarioService.getUsuarioByNome(nome));
+    public ResponseEntity<UsuarioDTO> getUsuarioByNome(@RequestBody @Valid BuscarUsuarioRequest buscarUsuarioRequest) {
+        return ResponseEntity.ok(usuarioService.getUsuarioByNome(buscarUsuarioRequest));
     }
 
     @Override
