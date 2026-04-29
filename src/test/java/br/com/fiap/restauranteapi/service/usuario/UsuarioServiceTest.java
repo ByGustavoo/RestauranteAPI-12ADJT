@@ -2,6 +2,7 @@ package br.com.fiap.restauranteapi.service.usuario;
 
 import br.com.fiap.restauranteapi.config.AbstractTest;
 import br.com.fiap.restauranteapi.exceptions.UsuarioNotFoundException;
+import br.com.fiap.restauranteapi.model.request.usuario.BuscarUsuarioRequest;
 import br.com.fiap.restauranteapi.model.request.usuario.CriarUsuarioRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -30,15 +31,7 @@ class UsuarioServiceTest extends AbstractTest {
 
     @Test
     void getUsuarioByNomeTest() {
-        var usuario = usuarioService.getUsuarioByNome("João Silva");
-
-        Assertions.assertNotNull(usuario);
-        Assertions.assertEquals("João Silva", usuario.nome());
-    }
-
-    @Test
-    void getUsuarioByNomeSemEspacoTest() {
-        var usuario = usuarioService.getUsuarioByNome("JoãoSilva");
+        var usuario = usuarioService.getUsuarioByNome(new BuscarUsuarioRequest("João Silva"));
 
         Assertions.assertNotNull(usuario);
         Assertions.assertEquals("João Silva", usuario.nome());
@@ -46,7 +39,7 @@ class UsuarioServiceTest extends AbstractTest {
 
     @Test
     void getUsuarioByNomeExceptionTest() {
-        Assertions.assertThrows(UsuarioNotFoundException.class, () -> usuarioService.getUsuarioByNome("Nome Inexistente"));
+        Assertions.assertThrows(UsuarioNotFoundException.class, () -> usuarioService.getUsuarioByNome(new BuscarUsuarioRequest("Nome Inexistente")));
     }
 
     @Test
