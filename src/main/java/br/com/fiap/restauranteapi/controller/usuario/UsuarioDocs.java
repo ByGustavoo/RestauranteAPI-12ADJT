@@ -13,7 +13,6 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -39,9 +38,8 @@ public interface UsuarioDocs {
                     description = "Erro interno do servidor!",
                     content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class)))
     })
-    @GetMapping(params = "nome")
+    @PostMapping("/buscar")
     ResponseEntity<UsuarioDTO> getUsuarioByNome(@RequestBody @Valid BuscarUsuarioRequest buscarUsuarioRequest);
-
 
     @Operation(summary = "Cadastrar um usuário", description = "Realiza o cadastro de um novo usuário no sistema com base nos dados informados no corpo da requisição.")
     @ApiResponses(value = {
