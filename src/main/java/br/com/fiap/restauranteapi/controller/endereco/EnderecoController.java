@@ -2,6 +2,7 @@ package br.com.fiap.restauranteapi.controller.endereco;
 
 import br.com.fiap.restauranteapi.model.dto.endereco.EnderecoDTO;
 import br.com.fiap.restauranteapi.model.request.endereco.CriarEnderecoRequest;
+import br.com.fiap.restauranteapi.model.request.endereco.UpdateAddressRequest;
 import br.com.fiap.restauranteapi.model.response.page.PageResponse;
 import br.com.fiap.restauranteapi.model.response.success.MensagemSucessoResponse;
 import br.com.fiap.restauranteapi.service.endereco.EnderecoService;
@@ -33,6 +34,11 @@ public class EnderecoController implements EnderecoDocs {
     @Override
     public ResponseEntity<MensagemSucessoResponse> saveAddress(@RequestBody @Valid CriarEnderecoRequest criarEnderecoRequest) {
         return ResponseEntity.status(HttpStatus.CREATED.value()).body(enderecoService.saveAddress(criarEnderecoRequest));
+    }
+
+    @Override
+    public ResponseEntity<MensagemSucessoResponse> updateAddressById(@PathVariable @NotNull Integer id, @RequestBody @Valid UpdateAddressRequest updateAddressRequest) {
+        return ResponseEntity.ok(enderecoService.updateAddressById(id, updateAddressRequest));
     }
 
     @Override

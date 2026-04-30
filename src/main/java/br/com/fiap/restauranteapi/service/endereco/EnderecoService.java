@@ -4,6 +4,7 @@ import br.com.fiap.restauranteapi.enums.Estado;
 import br.com.fiap.restauranteapi.model.dto.endereco.EnderecoDTO;
 import br.com.fiap.restauranteapi.model.dto.endereco.EnderecoMapper;
 import br.com.fiap.restauranteapi.model.request.endereco.CriarEnderecoRequest;
+import br.com.fiap.restauranteapi.model.request.endereco.UpdateAddressRequest;
 import br.com.fiap.restauranteapi.model.response.page.PageResponse;
 import br.com.fiap.restauranteapi.model.response.success.MensagemSucessoResponse;
 import br.com.fiap.restauranteapi.repository.endereco.EnderecoRepository;
@@ -39,6 +40,16 @@ public class EnderecoService {
 
         enderecoRepository.save(endereco);
         return new MensagemSucessoResponse(HttpStatus.CREATED.value(), "Endereço criado com sucesso!");
+    }
+
+    @Transactional
+    public MensagemSucessoResponse updateAddressById(Integer pId, UpdateAddressRequest pUpdateAddressRequest) {
+        var endereco = enderecoRepository.findById(pId).orElseThrow(EntityNotFoundException::new);
+
+        enderecoMapper.updateEnderecoFromDTO(pUpdateAddressRequest, endereco);
+        enderecoRepository.save(endereco);
+
+        return new MensagemSucessoResponse(HttpStatus.OK.value(), "Endereço atualizado com sucesso!");
     }
 
     @Transactional

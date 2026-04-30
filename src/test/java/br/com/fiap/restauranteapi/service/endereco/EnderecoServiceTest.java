@@ -2,6 +2,7 @@ package br.com.fiap.restauranteapi.service.endereco;
 
 import br.com.fiap.restauranteapi.config.AbstractTest;
 import br.com.fiap.restauranteapi.model.request.endereco.CriarEnderecoRequest;
+import br.com.fiap.restauranteapi.model.request.endereco.UpdateAddressRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,21 @@ class EnderecoServiceTest extends AbstractTest {
         );
 
         Assertions.assertDoesNotThrow(() -> enderecoService.saveAddress(address));
+    }
+
+    @Test
+    void updateAddressByIdTest() {
+
+        var address = new UpdateAddressRequest(
+                "123",
+                "Bairro Teste",
+                "SP",
+                "Perto do supermercado",
+                "",
+                "12345-678"
+        );
+
+        Assertions.assertDoesNotThrow(() -> enderecoService.updateAddressById(1, address));
     }
 
     @Test

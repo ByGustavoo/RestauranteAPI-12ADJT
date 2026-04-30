@@ -3,6 +3,7 @@ package br.com.fiap.restauranteapi.controller.endereco;
 import br.com.fiap.restauranteapi.exceptions.dto.ErrorResponseDTO;
 import br.com.fiap.restauranteapi.model.dto.endereco.EnderecoDTO;
 import br.com.fiap.restauranteapi.model.request.endereco.CriarEnderecoRequest;
+import br.com.fiap.restauranteapi.model.request.endereco.UpdateAddressRequest;
 import br.com.fiap.restauranteapi.model.response.page.PageResponse;
 import br.com.fiap.restauranteapi.model.response.success.MensagemSucessoResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -53,8 +54,29 @@ public interface EnderecoDocs {
     @PostMapping
     ResponseEntity<MensagemSucessoResponse> saveAddress(@RequestBody @Valid CriarEnderecoRequest criarEnderecoRequest);
 
-    @Operation(summary = "Remover um endereço", description = "Realiza a exclusão de um endereço do sistema com base no ID informado na URL."
-   )
+    @Operation(summary = "Atualizar um endereço", description = "Atualiza parcialmente um endereço existente com base no ID informado na URL e nos dados enviados no corpo da requisição.")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Endereço atualizado com sucesso!",
+                    content = @Content(schema = @Schema(implementation = MensagemSucessoResponse.class))),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Dados inválidos na requisição!",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Endereço não encontrado!",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Erro interno do servidor!",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class)))
+    })
+    @PatchMapping("/{id}")
+    ResponseEntity<MensagemSucessoResponse> updateAddressById(@PathVariable @NotNull Integer id, @RequestBody @Valid UpdateAddressRequest updateAddressRequest);
+
+    @Operation(summary = "Remover um endereço", description = "Realiza a exclusão de um endereço do sistema com base no ID informado na URL.")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "204",

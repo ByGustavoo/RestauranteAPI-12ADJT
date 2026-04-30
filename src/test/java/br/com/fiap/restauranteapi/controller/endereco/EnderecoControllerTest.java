@@ -14,10 +14,13 @@ class EnderecoControllerTest extends AbstractControllerTest {
 
     private String createAddressRequest;
 
+    private String updateAddressRequest;
+
     @BeforeEach
     void setUp() throws IOException {
-        if (createAddressRequest == null) {
+        if (createAddressRequest == null && updateAddressRequest == null) {
             createAddressRequest = new String(Files.readAllBytes(Paths.get("src/test/resources/endereco/createAddressRequest.json")));
+            updateAddressRequest = new String(Files.readAllBytes(Paths.get("src/test/resources/endereco/updateAddressRequest.json")));
         }
     }
 
@@ -29,6 +32,11 @@ class EnderecoControllerTest extends AbstractControllerTest {
     @Test
     void saveAddressTest() throws Exception {
         testPost("/v1/endereco", createAddressRequest);
+    }
+
+    @Test
+    void updateAddressByIdTest() throws Exception {
+        testPatch("/v1/endereco/1", updateAddressRequest);
     }
 
     @Test
