@@ -35,4 +35,9 @@ class EnderecoServiceTest extends AbstractTest {
 
         Assertions.assertDoesNotThrow(() -> enderecoService.saveAddress(address));
     }
+
+    @Test
+    void deleteAddressByIdTest() {
+        enderecoService.deleteAddressById(1);
+    }
 }

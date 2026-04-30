@@ -13,12 +13,11 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Endereço", description = "Endpoints relacionados aos Endereços dos Usuários")
 public interface EnderecoDocs {
@@ -53,4 +52,28 @@ public interface EnderecoDocs {
     })
     @PostMapping
     ResponseEntity<MensagemSucessoResponse> saveAddress(@RequestBody @Valid CriarEnderecoRequest criarEnderecoRequest);
+
+    @Operation(summary = "Remover um endereço", description = "Realiza a exclusão de um endereço do sistema com base no ID informado na URL."
+   )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "204",
+                    description = "Endereço removido com sucesso!"),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Dados inválidos na requisição!",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Endereço não encontrado!",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Erro interno do servidor!",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))
+           )
+    })
+    @DeleteMapping("/{id}")
+    ResponseEntity<Void> deleteAddressById(@PathVariable @NotNull Integer id);
+
 }

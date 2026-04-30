@@ -30,4 +30,9 @@ class EnderecoControllerTest extends AbstractControllerTest {
     void saveAddressTest() throws Exception {
         testPost("/v1/endereco", createAddressRequest);
     }
+
+    @Test
+    void deleteAddressByIdTest() throws Exception {
+        testDelete("/v1/endereco/2");
+    }
 }

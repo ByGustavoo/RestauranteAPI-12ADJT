@@ -8,6 +8,7 @@ import br.com.fiap.restauranteapi.model.response.page.PageResponse;
 import br.com.fiap.restauranteapi.model.response.success.MensagemSucessoResponse;
 import br.com.fiap.restauranteapi.repository.endereco.EnderecoRepository;
 import br.com.fiap.restauranteapi.repository.usuario.UsuarioRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -38,5 +39,11 @@ public class EnderecoService {
 
         enderecoRepository.save(endereco);
         return new MensagemSucessoResponse(HttpStatus.CREATED.value(), "Endereço criado com sucesso!");
+    }
+
+    @Transactional
+    public void deleteAddressById(Integer pId) {
+        var address = enderecoRepository.findById(pId).orElseThrow(EntityNotFoundException::new);
+        enderecoRepository.delete(address);
     }
 }
