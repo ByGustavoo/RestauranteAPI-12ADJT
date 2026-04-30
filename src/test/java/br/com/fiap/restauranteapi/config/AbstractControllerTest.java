@@ -51,6 +51,6 @@ public abstract class AbstractControllerTest {
 
     protected void testDelete(String url) throws Exception {
         mockMvc.perform(delete(url))
-                .andExpect(status().isOk());
+                .andExpect(status().isNoContent());
     }
 }

@@ -33,6 +33,6 @@ class EnderecoControllerTest extends AbstractControllerTest {
 
     @Test
     void deleteAddressByIdTest() throws Exception {
-        testDelete("/v1/endereco/2");
+        testDelete("/v1/endereco/1");
     }
 }
