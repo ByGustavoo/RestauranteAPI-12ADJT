@@ -2,7 +2,7 @@ package br.com.fiap.restauranteapi.controller.usuario;
 
 import br.com.fiap.restauranteapi.exceptions.dto.ErrorResponseDTO;
 import br.com.fiap.restauranteapi.model.dto.usuario.CreateUsuarioDTO;
-import br.com.fiap.restauranteapi.model.dto.usuario.UpdateUserDTO;
+import br.com.fiap.restauranteapi.model.dto.usuario.AtualizarUsuarioRequest;
 import br.com.fiap.restauranteapi.model.dto.usuario.UsuarioDTO;
 import br.com.fiap.restauranteapi.model.response.MensagemSucessoResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -86,6 +86,6 @@ public interface UsuarioDocs {
                     description = "Erro interno do servidor!",
                     content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class)))
     })
-    ResponseEntity<MensagemSucessoResponse> atualizarUsuario(@PathVariable (value = "id") @NotNull Integer id, @RequestBody @Valid UpdateUserDTO updateUserDTO);
+    ResponseEntity<MensagemSucessoResponse> atualizarUsuario(@PathVariable (value = "id") @NotNull Integer id, @RequestBody @Valid AtualizarUsuarioRequest atualizarUsuarioRequest);
 
 }

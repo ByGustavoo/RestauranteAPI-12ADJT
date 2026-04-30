@@ -1,8 +1,7 @@
 package br.com.fiap.restauranteapi.model.dto.usuario;
 
 import br.com.fiap.restauranteapi.model.entity.usuario.Usuario;
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
+import org.mapstruct.*;
 
 @Mapper(componentModel = "spring")
 public interface UsuarioMapper {
@@ -14,4 +13,10 @@ public interface UsuarioMapper {
     @Mapping(target = "dataAlteracao", ignore = true)
     @Mapping(target = "situacaoCadastro.id", ignore = true)
     Usuario fromCreateDTOToEntity(CreateUsuarioDTO createUsuarioDTO);
+
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "tipoUsuario", ignore = true)
+    @Mapping(target = "situacaoCadastro", ignore = true)
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    void updateUsuarioFromDto(AtualizarUsuarioRequest dto, @MappingTarget Usuario entity);
 }

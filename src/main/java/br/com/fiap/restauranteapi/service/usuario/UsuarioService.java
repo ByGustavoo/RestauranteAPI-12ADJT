@@ -3,7 +3,7 @@ package br.com.fiap.restauranteapi.service.usuario;
 import br.com.fiap.restauranteapi.enums.ESituacaoCadastro;
 import br.com.fiap.restauranteapi.exceptions.UsuarioNotFoundException;
 import br.com.fiap.restauranteapi.model.dto.usuario.CreateUsuarioDTO;
-import br.com.fiap.restauranteapi.model.dto.usuario.UpdateUserDTO;
+import br.com.fiap.restauranteapi.model.dto.usuario.AtualizarUsuarioRequest;
 import br.com.fiap.restauranteapi.model.dto.usuario.UsuarioDTO;
 import br.com.fiap.restauranteapi.model.dto.usuario.UsuarioMapper;
 import br.com.fiap.restauranteapi.model.entity.usuario.Usuario;
@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Arrays;
 
@@ -89,30 +88,20 @@ public class UsuarioService {
     }
 
     @Transactional
-    public MensagemSucessoResponse updateUser(Integer id , UpdateUserDTO pUpdateUserDTO) {
-
-        if(!usuarioRepository.existsById(id)) {
-            throw new UsuarioNotFoundException("O Usuário com o id informado não foi encontrado!");
-        }
-        if(usuarioRepository.existsByEmailIgnoreCaseAndIdNot(pUpdateUserDTO.email(), id)) {
-            throw new DataIntegrityViolationException("O E-mail informado já está cadastrado no sistema!");
-        }
+    public MensagemSucessoResponse updateUser(Integer id, AtualizarUsuarioRequest req) {
 
         Usuario usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new UsuarioNotFoundException("Usuário não encontrado!"));
-        usuario.setNome(pUpdateUserDTO.nome());
-        usuario.setEmail(pUpdateUserDTO.email());
-        usuario.setSituacaoCadastro(
-                situacaoCadastroRepository.getReferenceById(
-                        Arrays.stream(ESituacaoCadastro.values())
-                                .filter(e -> e.getCodigo() == Integer.parseInt(pUpdateUserDTO.situacaoCadastro()))
-                                .findFirst()
-                                .orElseThrow(() -> new IllegalArgumentException("Código inválido"))
-                                .getCodigo()
-                )
-        );
+
+        usuarioMapper.updateUsuarioFromDto(req, usuario);
+
+        if (req.situacaoCadastro() != null) {
+            usuario.setSituacaoCadastro(
+                    situacaoCadastroRepository.getReferenceById(ESituacaoCadastro.ATIVO.getCodigo())
+            );
+        }
+
         usuario.setDataAlteracao(LocalDate.now(ZoneId.of("UTC")));
-        usuarioRepository.save(usuario);
-        return new MensagemSucessoResponse(HttpStatus.CREATED.value(), "Usuário atualizado com sucesso!");
+        return new MensagemSucessoResponse(HttpStatus.OK.value(), "Usuário atualizado com sucesso!");
     }
 }

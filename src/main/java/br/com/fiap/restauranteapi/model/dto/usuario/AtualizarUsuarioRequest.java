@@ -1,13 +1,11 @@
 package br.com.fiap.restauranteapi.model.dto.usuario;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.*;
 
-import java.time.LocalDate;
 
 @Schema(description = "Modelo utilizado para criação de um Usuário")
-public record UpdateUserDTO(
+public record AtualizarUsuarioRequest(
 
 
         @Schema(description = "Nome do usuário")
@@ -17,7 +15,9 @@ public record UpdateUserDTO(
         @Email(message = "O campo 'email' deve ser um endereço de e-mail válido!")
         String email,
 
-        @Schema(description = "Situação do cadastro do usuário", example = "ATIVO")
+        @Min(value = 1, message = "Valor inválido para situacaoCadastro")
+        @Max(value = 1, message = "Valor inválido para situacaoCadastro")
+        @Schema(description = "Situação do cadastro do usuário", example = "1")
         Integer situacaoCadastro
 
 ) {}
