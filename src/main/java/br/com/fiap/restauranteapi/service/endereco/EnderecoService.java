@@ -44,6 +44,7 @@ public class EnderecoService {
 
     @Transactional
     public MensagemSucessoResponse updateAddressById(Integer pId, UpdateAddressRequest pUpdateAddressRequest) {
+        Estado.verificarEstado(pUpdateAddressRequest.estado());
         var endereco = enderecoRepository.findById(pId).orElseThrow(EntityNotFoundException::new);
 
         enderecoMapper.updateEnderecoFromDTO(pUpdateAddressRequest, endereco);

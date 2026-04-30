@@ -54,6 +54,6 @@ class EnderecoServiceTest extends AbstractTest {
 
     @Test
     void deleteAddressByIdTest() {
-        enderecoService.deleteAddressById(1);
+        Assertions.assertDoesNotThrow(() -> enderecoService.deleteAddressById(1));
     }
 }

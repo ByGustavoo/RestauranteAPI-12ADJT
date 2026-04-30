@@ -111,6 +111,20 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(response);
     }
 
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ErrorResponseDTO> handleIllegalArgumentException(IllegalArgumentException ex, HttpServletRequest pHttpServletRequest) {
+
+        var response = new ErrorResponseDTO(
+                HttpStatus.BAD_REQUEST.value(),
+                "Requisição Inválida!",
+                pHttpServletRequest.getRequestURI(),
+                "/RestauranteAPI/problems/illegal-argument",
+                "A requisição contém dados inválidos.",
+                ex.getMessage());
+
+        return ResponseEntity.badRequest().body(response);
+    }
+
     @ExceptionHandler(UsuarioNotFoundException.class)
     public ResponseEntity<ErrorResponseDTO> handleUsuarioNotFoundException(UsuarioNotFoundException ex, HttpServletRequest pHttpServletRequest) {
 
