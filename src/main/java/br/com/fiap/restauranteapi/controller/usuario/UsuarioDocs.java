@@ -1,27 +1,29 @@
 package br.com.fiap.restauranteapi.controller.usuario;
 
 import br.com.fiap.restauranteapi.exceptions.dto.ErrorResponseDTO;
-import br.com.fiap.restauranteapi.model.dto.usuario.CreateUsuarioDTO;
-import br.com.fiap.restauranteapi.model.dto.usuario.AtualizarUsuarioRequest;
+import br.com.fiap.restauranteapi.model.request.usuario.AtualizarUsuarioRequest;
 import br.com.fiap.restauranteapi.model.dto.usuario.UsuarioDTO;
-import br.com.fiap.restauranteapi.model.response.MensagemSucessoResponse;
+import br.com.fiap.restauranteapi.model.request.usuario.BuscarUsuarioRequest;
+import br.com.fiap.restauranteapi.model.request.usuario.CriarUsuarioRequest;
+import br.com.fiap.restauranteapi.model.response.success.MensagemSucessoResponse;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
-@Tag(name = "Usuário", description = "Endpoints relacionados ao gerenciamento de usuários")
+@Tag(name = "Usuário", description = "Endpoints relacionados ao gerenciamento de Usuários")
 public interface UsuarioDocs {
 
-    @Operation(summary = "Buscar usuário por nome", description = "Retorna os dados de um usuário a partir do nome informado como parâmetro na URL.")
+    @Operation(summary = "Buscar usuário por nome", description = "Retorna os dados de um usuário a partir do nome informado no corpo da requisição.")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
@@ -29,7 +31,7 @@ public interface UsuarioDocs {
                     content = @Content(schema = @Schema(implementation = UsuarioDTO.class))),
             @ApiResponse(
                     responseCode = "400",
-                    description = "Parâmetro nome inválido ou não informado!",
+                    description = "Dados inválidos na requisição!",
                     content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
             @ApiResponse(
                     responseCode = "404",
@@ -40,9 +42,8 @@ public interface UsuarioDocs {
                     description = "Erro interno do servidor!",
                     content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class)))
     })
-    @GetMapping(params = "nome")
-    ResponseEntity<UsuarioDTO> getUsuarioByNome(@Parameter(description = "Nome do usuário para consulta.", example = "João Silva", required = true) @RequestParam @NotBlank String nome);
-
+    @PostMapping("/buscar")
+    ResponseEntity<UsuarioDTO> getUsuarioByNome(@RequestBody @Valid BuscarUsuarioRequest buscarUsuarioRequest);
 
     @Operation(summary = "Cadastrar um usuário", description = "Realiza o cadastro de um novo usuário no sistema com base nos dados informados no corpo da requisição.")
     @ApiResponses(value = {
@@ -64,7 +65,7 @@ public interface UsuarioDocs {
                     content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class)))
     })
     @PostMapping
-    ResponseEntity<MensagemSucessoResponse> cadastrarUsuario(@RequestBody @Valid CreateUsuarioDTO createUsuarioDTO);
+    ResponseEntity<MensagemSucessoResponse> cadastrarUsuario(@RequestBody @Valid CriarUsuarioRequest criarUsuarioRequest);
 
 
     @Operation(summary = "Atualizar usuário por id", description = "Atualiza os dados de um usuário de acordo com o id dele.")
@@ -75,7 +76,7 @@ public interface UsuarioDocs {
                     content = @Content(schema = @Schema(implementation = UsuarioDTO.class))),
             @ApiResponse(
                     responseCode = "400",
-                    description = "Parâmetro id inválido ou não informado!",
+                    description = "Dados inválidos na requisição!",
                     content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
             @ApiResponse(
                     responseCode = "404",
@@ -86,6 +87,7 @@ public interface UsuarioDocs {
                     description = "Erro interno do servidor!",
                     content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class)))
     })
-    ResponseEntity<MensagemSucessoResponse> atualizarUsuario(@PathVariable (value = "id") @NotNull Integer id, @RequestBody @Valid AtualizarUsuarioRequest atualizarUsuarioRequest);
+    @PatchMapping("/{id}")
+    ResponseEntity<MensagemSucessoResponse> atualizarUsuario(@PathVariable @NotNull Integer id, @RequestBody @Valid AtualizarUsuarioRequest atualizarUsuarioRequest);
 
 }

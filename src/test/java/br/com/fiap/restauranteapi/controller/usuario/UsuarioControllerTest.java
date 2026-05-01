@@ -12,25 +12,33 @@ import java.nio.file.Paths;
 @SpringBootTest
 class UsuarioControllerTest extends AbstractControllerTest {
 
-    private String usuario;
+    private String createUserRequest;
 
-    private String buscarUsuario;
+    private String updateUserRequest;
+
+    private String findUserByNameRequest;
 
     @BeforeEach
     void setUp() throws IOException {
-        if (usuario == null && buscarUsuario == null) {
-            usuario = new String(Files.readAllBytes(Paths.get("src/test/resources/usuario/createUserRequest.json")));
-            buscarUsuario = new String(Files.readAllBytes(Paths.get("src/test/resources/usuario/findUser.json")));
+        if (createUserRequest == null && updateUserRequest == null && findUserByNameRequest == null) {
+            createUserRequest = new String(Files.readAllBytes(Paths.get("src/test/resources/usuario/createUserRequest.json")));
+            updateUserRequest = new String(Files.readAllBytes(Paths.get("src/test/resources/usuario/updateUserRequest.json")));
+            findUserByNameRequest = new String(Files.readAllBytes(Paths.get("src/test/resources/usuario/findUserByNameRequest.json")));
         }
     }
 
     @Test
     void getUsuarioByNomeTest() throws Exception {
-        testPostStatusOk("/v1/usuario/buscar", buscarUsuario);
+        testPostStatusOk("/v1/usuario/buscar", findUserByNameRequest);
     }
 
     @Test
     void cadastrarUsuarioTest() throws Exception {
-        testPost("/v1/usuario", usuario);
+        testPost("/v1/usuario", createUserRequest);
+    }
+
+    @Test
+    void atualizarUsuarioTest() throws Exception {
+        testPatch("/v1/usuario/1", updateUserRequest);
     }
 }

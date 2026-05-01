@@ -1,13 +1,14 @@
 package br.com.fiap.restauranteapi.service.usuario;
 
-import br.com.fiap.restauranteapi.enums.ESituacaoCadastro;
+import br.com.fiap.restauranteapi.enums.SituacaoCadastro;
 import br.com.fiap.restauranteapi.exceptions.UsuarioNotFoundException;
-import br.com.fiap.restauranteapi.model.dto.usuario.CreateUsuarioDTO;
-import br.com.fiap.restauranteapi.model.dto.usuario.AtualizarUsuarioRequest;
+import br.com.fiap.restauranteapi.model.request.usuario.AtualizarUsuarioRequest;
 import br.com.fiap.restauranteapi.model.dto.usuario.UsuarioDTO;
 import br.com.fiap.restauranteapi.model.dto.usuario.UsuarioMapper;
 import br.com.fiap.restauranteapi.model.entity.usuario.Usuario;
-import br.com.fiap.restauranteapi.model.response.MensagemSucessoResponse;
+import br.com.fiap.restauranteapi.model.request.usuario.BuscarUsuarioRequest;
+import br.com.fiap.restauranteapi.model.request.usuario.CriarUsuarioRequest;
+import br.com.fiap.restauranteapi.model.response.success.MensagemSucessoResponse;
 import br.com.fiap.restauranteapi.repository.situacaocadastro.SituacaoCadastroRepository;
 import br.com.fiap.restauranteapi.repository.tipousuario.TipoUsuarioRepository;
 import br.com.fiap.restauranteapi.repository.usuario.UsuarioRepository;
@@ -19,8 +20,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Arrays;
 
 @Service
 @RequiredArgsConstructor
@@ -41,22 +40,8 @@ public class UsuarioService {
     }
 
     @Transactional(readOnly = true)
-    public UsuarioDTO getUsuarioById(Integer pId) {
-        var usuario = usuarioRepository.getReferenceById(pId);
-
-        return new UsuarioDTO(
-                usuario.getId(),
-                usuario.getNome(),
-                usuario.getEmail(),
-                usuario.getLogin(),
-                usuario.getTipoUsuario().getDescricao(),
-                usuario.getSituacaoCadastro().getDescricao(),
-                usuario.getDataAlteracao());
-    }
-
-    @Transactional(readOnly = true)
-    public UsuarioDTO getUsuarioByNome(String pNome) {
-        var usuario = usuarioRepository.findByNome(pNome).orElseThrow(() -> new UsuarioNotFoundException("O Usuário com o nome informado não foi encontrado!"));
+    public UsuarioDTO getUsuarioByNome(BuscarUsuarioRequest pBuscarUsuarioRequest) {
+        var usuario = usuarioRepository.findByNome(pBuscarUsuarioRequest.nome()).orElseThrow(() -> new UsuarioNotFoundException("O Usuário com o nome informado não foi encontrado!"));
 
         return new UsuarioDTO(
                 usuario.getId(),
@@ -69,39 +54,34 @@ public class UsuarioService {
     }
 
     @Transactional
-    public MensagemSucessoResponse salvarUsuario(CreateUsuarioDTO pCreateUsuarioDTO) {
-        if (usuarioRepository.existsByEmailIgnoreCase(pCreateUsuarioDTO.email())) {
+    public MensagemSucessoResponse salvarUsuario(CriarUsuarioRequest pCriarUsuarioRequest) {
+        if (usuarioRepository.existsByEmailIgnoreCase(pCriarUsuarioRequest.email())) {
             throw new DataIntegrityViolationException("O E-mail informado já está cadastrado no sistema!");
         }
 
-        if (usuarioRepository.existsByLoginIgnoreCase(pCreateUsuarioDTO.login())) {
+        if (usuarioRepository.existsByLoginIgnoreCase(pCriarUsuarioRequest.login())) {
             throw new DataIntegrityViolationException("O Login informado já está cadastrado no sistema!");
         }
 
-        var usuario = usuarioMapper.fromCreateDTOToEntity(pCreateUsuarioDTO);
-        usuario.setSenha(passwordService.encriptografarSenha(pCreateUsuarioDTO.senha()));
-        usuario.setTipoUsuario(tipoUsuarioRepository.getReferenceById(pCreateUsuarioDTO.tipoUsuario()));
-        usuario.setSituacaoCadastro(situacaoCadastroRepository.getReferenceById(ESituacaoCadastro.ATIVO.getCodigo()));
+        var usuario = usuarioMapper.fromCreateRequestToEntity(pCriarUsuarioRequest);
+        usuario.setSenha(passwordService.encriptografarSenha(pCriarUsuarioRequest.senha()));
+        usuario.setTipoUsuario(tipoUsuarioRepository.getReferenceById(pCriarUsuarioRequest.tipoUsuario()));
+        usuario.setSituacaoCadastro(situacaoCadastroRepository.getReferenceById(SituacaoCadastro.ATIVO.getCodigo()));
 
         usuarioRepository.save(usuario);
         return new MensagemSucessoResponse(HttpStatus.CREATED.value(), "Usuário cadastrado com sucesso!");
     }
 
     @Transactional
-    public MensagemSucessoResponse updateUser(Integer id, AtualizarUsuarioRequest req) {
+    public MensagemSucessoResponse updateUser(Integer pId, AtualizarUsuarioRequest pAtualizarUsuarioRequest) {
+        var usuario = usuarioRepository.getReferenceById(pId);
+        usuarioMapper.updateUsuarioFromDTO(pAtualizarUsuarioRequest, usuario);
 
-        Usuario usuario = usuarioRepository.findById(id)
-                .orElseThrow(() -> new UsuarioNotFoundException("Usuário não encontrado!"));
-
-        usuarioMapper.updateUsuarioFromDto(req, usuario);
-
-        if (req.situacaoCadastro() != null) {
-            usuario.setSituacaoCadastro(
-                    situacaoCadastroRepository.getReferenceById(ESituacaoCadastro.ATIVO.getCodigo())
-            );
+        if (pAtualizarUsuarioRequest.situacaoCadastro() != null) {
+            usuario.setSituacaoCadastro(situacaoCadastroRepository.getReferenceById(SituacaoCadastro.ATIVO.getCodigo()));
         }
 
-        usuario.setDataAlteracao(LocalDate.now(ZoneId.of("UTC")));
+        usuario.setDataAlteracao(LocalDate.now());
         return new MensagemSucessoResponse(HttpStatus.OK.value(), "Usuário atualizado com sucesso!");
     }
 }
