@@ -13,8 +13,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
     Optional<Usuario> findByLogin(String login);
 
-    boolean existsByLoginIgnoreCase(String login);
-
     @Query("""
             SELECT u
             FROM Usuario u
@@ -23,5 +21,7 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
     Optional<Usuario> findByNome(@Param("nome") String nome);
 
     boolean existsByEmailIgnoreCase(String email);
+
+    boolean existsByLoginIgnoreCase(String login);
 
 }

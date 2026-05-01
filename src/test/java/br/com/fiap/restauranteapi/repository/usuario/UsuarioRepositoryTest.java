@@ -22,7 +22,7 @@ class UsuarioRepositoryTest extends AbstractTest {
     }
 
     @Test
-    void findByNomeContainingIgnoreCaseTest() {
+    void findByNomeTest() {
         var usuario = Assertions.assertDoesNotThrow(() -> usuarioRepository.findByNome("João Silva"));
 
         Assertions.assertNotNull(usuario);
@@ -37,5 +37,14 @@ class UsuarioRepositoryTest extends AbstractTest {
 
         Assertions.assertEquals(Boolean.TRUE, emailExistente);
         Assertions.assertNotEquals(Boolean.TRUE, emailInexistente);
+    }
+
+    @Test
+    void existsByLoginIgnoreCaseTest() {
+        var loginExistente = Assertions.assertDoesNotThrow(() -> usuarioRepository.existsByLoginIgnoreCase("joao_user01"));
+        var loginInexistente = Assertions.assertDoesNotThrow(() -> usuarioRepository.existsByLoginIgnoreCase("inexistente_user"));
+
+        Assertions.assertEquals(Boolean.TRUE, loginExistente);
+        Assertions.assertNotEquals(Boolean.TRUE, loginInexistente);
     }
 }

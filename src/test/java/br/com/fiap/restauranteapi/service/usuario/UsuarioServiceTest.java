@@ -2,6 +2,7 @@ package br.com.fiap.restauranteapi.service.usuario;
 
 import br.com.fiap.restauranteapi.config.AbstractTest;
 import br.com.fiap.restauranteapi.exceptions.UsuarioNotFoundException;
+import br.com.fiap.restauranteapi.model.request.usuario.AtualizarUsuarioRequest;
 import br.com.fiap.restauranteapi.model.request.usuario.BuscarUsuarioRequest;
 import br.com.fiap.restauranteapi.model.request.usuario.CriarUsuarioRequest;
 import org.junit.jupiter.api.Assertions;
@@ -45,20 +46,20 @@ class UsuarioServiceTest extends AbstractTest {
     @Test
     void salvarUsuarioTest() {
 
-        var createUsuarioDTO = buildUsuario(
+        var createUsuarioRequest = new CriarUsuarioRequest(
                 "teste",
                 "teste@email.com",
                 "teste_user01",
                 "senha@1234567",
                 1);
 
-        Assertions.assertDoesNotThrow(() -> usuarioService.salvarUsuario(createUsuarioDTO));
+        Assertions.assertDoesNotThrow(() -> usuarioService.salvarUsuario(createUsuarioRequest));
     }
 
     @Test
     void salvarUsuarioEmailDuplicadoTest() {
 
-        var emailDuplicado = buildUsuario(
+        var emailDuplicado = new CriarUsuarioRequest(
                 "joao",
                 "joao@email.com",
                 "joao__user01",
@@ -71,7 +72,7 @@ class UsuarioServiceTest extends AbstractTest {
     @Test
     void salvarUsuarioLoginDuplicadoTest() {
 
-        var loginDuplicado = buildUsuario(
+        var loginDuplicado = new CriarUsuarioRequest(
                 "ana",
                 "ana@email.com.br",
                 "ana_user01",
@@ -81,7 +82,15 @@ class UsuarioServiceTest extends AbstractTest {
         Assertions.assertThrows(DataIntegrityViolationException.class, () -> usuarioService.salvarUsuario(loginDuplicado));
     }
 
-    private CriarUsuarioRequest buildUsuario(String nome, String email, String login, String senha, Integer tipoUsuario) {
-        return new CriarUsuarioRequest(nome, email, login, senha, tipoUsuario);
+    @Test
+    void updateUserTest() {
+
+        var updateUserRequest = new AtualizarUsuarioRequest(
+                "João Silva Atualizado",
+                "joao.atualizado@email.com",
+                1
+        );
+
+        Assertions.assertDoesNotThrow(() -> usuarioService.updateUser(1, updateUserRequest));
     }
 }

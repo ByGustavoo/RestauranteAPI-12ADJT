@@ -2,6 +2,7 @@ package br.com.fiap.restauranteapi.service.usuario;
 
 import br.com.fiap.restauranteapi.enums.SituacaoCadastro;
 import br.com.fiap.restauranteapi.exceptions.UsuarioNotFoundException;
+import br.com.fiap.restauranteapi.model.request.usuario.AtualizarUsuarioRequest;
 import br.com.fiap.restauranteapi.model.dto.usuario.UsuarioDTO;
 import br.com.fiap.restauranteapi.model.dto.usuario.UsuarioMapper;
 import br.com.fiap.restauranteapi.model.entity.usuario.Usuario;
@@ -12,11 +13,14 @@ import br.com.fiap.restauranteapi.repository.situacaocadastro.SituacaoCadastroRe
 import br.com.fiap.restauranteapi.repository.tipousuario.TipoUsuarioRepository;
 import br.com.fiap.restauranteapi.repository.usuario.UsuarioRepository;
 import br.com.fiap.restauranteapi.service.auth.PasswordService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
 
 @Service
 @RequiredArgsConstructor
@@ -67,5 +71,18 @@ public class UsuarioService {
 
         usuarioRepository.save(usuario);
         return new MensagemSucessoResponse(HttpStatus.CREATED.value(), "Usuário cadastrado com sucesso!");
+    }
+
+    @Transactional
+    public MensagemSucessoResponse updateUser(Integer pId, AtualizarUsuarioRequest pAtualizarUsuarioRequest) {
+        var usuario = usuarioRepository.findById(pId).orElseThrow(EntityNotFoundException::new);
+        usuarioMapper.updateUsuarioFromDTO(pAtualizarUsuarioRequest, usuario);
+
+        if (pAtualizarUsuarioRequest.situacaoCadastro() != null) {
+            usuario.setSituacaoCadastro(situacaoCadastroRepository.getReferenceById(SituacaoCadastro.ATIVO.getCodigo()));
+        }
+
+        usuario.setDataAlteracao(LocalDate.now());
+        return new MensagemSucessoResponse(HttpStatus.OK.value(), "Usuário atualizado com sucesso!");
     }
 }
