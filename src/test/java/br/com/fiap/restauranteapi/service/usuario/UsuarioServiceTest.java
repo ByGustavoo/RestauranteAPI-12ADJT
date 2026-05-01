@@ -88,16 +88,15 @@ class UsuarioServiceTest extends AbstractTest {
         var updateUserRequest = new AtualizarUsuarioRequest(
                 "João Silva Atualizado",
                 "joao.atualizado@email.com",
-                2
+                1
         );
 
         Assertions.assertDoesNotThrow(() -> usuarioService.updateUser(1, updateUserRequest));
-
         var usuarioAtualizado = usuarioService.getUsuarioByLogin("joao_user01");
 
         Assertions.assertNotNull(usuarioAtualizado);
         Assertions.assertEquals("João Silva Atualizado", usuarioAtualizado.getNome());
         Assertions.assertEquals("joao.atualizado@email.com", usuarioAtualizado.getEmail());
-        Assertions.assertEquals(2, usuarioAtualizado.getSituacao());
+        Assertions.assertEquals(1, usuarioAtualizado.getSituacaoCadastro().getId());
     }
 }
