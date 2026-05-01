@@ -14,8 +14,8 @@ public record AtualizarUsuarioRequest(
         @Email(message = "O campo 'email' deve ser um endereço de e-mail válido!")
         String email,
 
-        @Min(value = 1, message = "Situacão Cadastro inválida!")
-        @Max(value = 1, message = "Situacão Cadastro inválida!")
+        @Min(value = 1, message = "Situação Cadastro inválida!")
+        @Max(value = 1, message = "Situação Cadastro inválida!")
         @Schema(description = "Situação do cadastro do usuário", example = "1")
         Integer situacaoCadastro
 
