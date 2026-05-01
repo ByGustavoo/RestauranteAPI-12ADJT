@@ -126,7 +126,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<ErrorResponseDTO> handleUsuarioNotFoundException(UserNotFoundException ex, HttpServletRequest pHttpServletRequest) {
+    public ResponseEntity<ErrorResponseDTO> handleUserNotFoundException(UserNotFoundException ex, HttpServletRequest pHttpServletRequest) {
 
         var response = new ErrorResponseDTO(
                 HttpStatus.NOT_FOUND.value(),
