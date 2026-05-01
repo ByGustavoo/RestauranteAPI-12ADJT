@@ -2,7 +2,7 @@ package br.com.fiap.restauranteapi.controller.usuario;
 
 import br.com.fiap.restauranteapi.model.dto.usuario.UserDTO;
 import br.com.fiap.restauranteapi.model.request.usuario.CreateUserRequest;
-import br.com.fiap.restauranteapi.model.request.usuario.SearchUserByNameRequest;
+import br.com.fiap.restauranteapi.model.request.usuario.findUserByNameRequest;
 import br.com.fiap.restauranteapi.model.request.usuario.UpdateUserRequest;
 import br.com.fiap.restauranteapi.model.response.success.SuccessMessageResponse;
 import br.com.fiap.restauranteapi.service.usuario.UserService;
@@ -23,8 +23,8 @@ public class UserController implements UserDocs {
     private final UserService userService;
 
     @Override
-    public ResponseEntity<UserDTO> getUserByName(@RequestBody @Valid SearchUserByNameRequest searchUserByNameRequest) {
-        return ResponseEntity.ok(userService.getUserByName(searchUserByNameRequest));
+    public ResponseEntity<UserDTO> getUserByName(@RequestBody @Valid findUserByNameRequest findUserByNameRequest) {
+        return ResponseEntity.ok(userService.findUserByName(findUserByNameRequest));
     }
 
     @Override

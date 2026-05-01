@@ -96,6 +96,6 @@ public interface AddressDocs {
             )
     })
     @DeleteMapping("/{id}")
-    ResponseEntity<Void> deleteAddressById(@PathVariable @NotNull Integer id);
+    ResponseEntity<Void> deleteAddressById(@PathVariable Integer id);
 
 }

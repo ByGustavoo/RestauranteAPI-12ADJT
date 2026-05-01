@@ -16,6 +16,7 @@ import org.springframework.web.bind.UnsatisfiedServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.HandlerMethodValidationException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -147,6 +148,20 @@ public class GlobalExceptionHandler {
                 pHttpServletRequest.getRequestURI(),
                 "/RestauranteAPI/problems/entity-not-found",
                 "Não foi possível localizar um registro com o ID informado!",
+                ex.getMessage());
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+    }
+
+    @ExceptionHandler(NoResourceFoundException.class)
+    public ResponseEntity<ErrorResponseDTO> handleNoResourceFoundException(NoResourceFoundException ex, HttpServletRequest pHttpServletRequest) {
+
+        var response = new ErrorResponseDTO(
+                HttpStatus.NOT_FOUND.value(),
+                "Recurso não encontrado!",
+                pHttpServletRequest.getRequestURI(),
+                "/RestauranteAPI/problems/resource-not-found",
+                "O endpoint informado não existe!",
                 ex.getMessage());
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);

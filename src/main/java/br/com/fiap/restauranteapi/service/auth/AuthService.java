@@ -43,6 +43,6 @@ public class AuthService {
     }
 
     private User getUserByLogin(String pLogin) {
-        return userService.getUserByLogin(pLogin);
+        return userService.findUserByLogin(pLogin);
     }
 }

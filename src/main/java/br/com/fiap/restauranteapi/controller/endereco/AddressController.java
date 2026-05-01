@@ -8,7 +8,6 @@ import br.com.fiap.restauranteapi.model.response.success.SuccessMessageResponse;
 import br.com.fiap.restauranteapi.service.endereco.AddressService;
 import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -37,12 +36,12 @@ public class AddressController implements AddressDocs {
     }
 
     @Override
-    public ResponseEntity<SuccessMessageResponse> updateAddressById(@PathVariable @NotNull Integer id, @RequestBody @Valid UpdateAddressRequest updateAddressRequest) {
+    public ResponseEntity<SuccessMessageResponse> updateAddressById(@PathVariable Integer id, @RequestBody @Valid UpdateAddressRequest updateAddressRequest) {
         return ResponseEntity.ok(addressService.updateAddressById(id, updateAddressRequest));
     }
 
     @Override
-    public ResponseEntity<Void> deleteAddressById(@PathVariable @NotNull Integer id) {
+    public ResponseEntity<Void> deleteAddressById(@PathVariable Integer id) {
         addressService.deleteAddressById(id);
         return ResponseEntity.noContent().build();
     }

@@ -3,7 +3,7 @@ package br.com.fiap.restauranteapi.service.usuario;
 import br.com.fiap.restauranteapi.config.AbstractTest;
 import br.com.fiap.restauranteapi.exceptions.UserNotFoundException;
 import br.com.fiap.restauranteapi.model.request.usuario.CreateUserRequest;
-import br.com.fiap.restauranteapi.model.request.usuario.SearchUserByNameRequest;
+import br.com.fiap.restauranteapi.model.request.usuario.findUserByNameRequest;
 import br.com.fiap.restauranteapi.model.request.usuario.UpdateUserRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -18,29 +18,29 @@ class UserServiceTest extends AbstractTest {
     private UserService userService;
 
     @Test
-    void getUserByLoginTest() {
-        var user = userService.getUserByLogin("joao_user01");
+    void findUserByLoginTest() {
+        var user = userService.findUserByLogin("joao_user01");
 
         Assertions.assertNotNull(user);
         Assertions.assertEquals("joao_user01", user.getLogin());
     }
 
     @Test
-    void getUserByLoginExceptionTest() {
-        Assertions.assertThrows(UserNotFoundException.class, () -> userService.getUserByLogin("loginInexistente"));
+    void findUserByLoginExceptionTest() {
+        Assertions.assertThrows(UserNotFoundException.class, () -> userService.findUserByLogin("loginInexistente"));
     }
 
     @Test
-    void getUserByNameTest() {
-        var usuario = userService.getUserByName(new SearchUserByNameRequest("João Silva"));
+    void findUserByNameTest() {
+        var usuario = userService.findUserByName(new findUserByNameRequest("João Silva"));
 
         Assertions.assertNotNull(usuario);
         Assertions.assertEquals("João Silva", usuario.nome());
     }
 
     @Test
-    void getUserByNameExceptionTest() {
-        Assertions.assertThrows(UserNotFoundException.class, () -> userService.getUserByName(new SearchUserByNameRequest("Nome Inexistente")));
+    void findUserByNameExceptionTest() {
+        Assertions.assertThrows(UserNotFoundException.class, () -> userService.findUserByName(new findUserByNameRequest("Nome Inexistente")));
     }
 
     @Test
