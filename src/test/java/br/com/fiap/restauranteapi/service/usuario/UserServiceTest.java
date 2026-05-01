@@ -2,9 +2,9 @@ package br.com.fiap.restauranteapi.service.usuario;
 
 import br.com.fiap.restauranteapi.config.AbstractTest;
 import br.com.fiap.restauranteapi.exceptions.UserNotFoundException;
-import br.com.fiap.restauranteapi.model.request.usuario.UpdateUserRequest;
 import br.com.fiap.restauranteapi.model.request.usuario.CreateUserRequest;
 import br.com.fiap.restauranteapi.model.request.usuario.SearchUserByNameRequest;
+import br.com.fiap.restauranteapi.model.request.usuario.UpdateUserRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

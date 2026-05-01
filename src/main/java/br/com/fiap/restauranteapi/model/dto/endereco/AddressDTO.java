@@ -32,6 +32,6 @@ public record AddressDTO(
 
 ) {
     public AddressDTO(Address pAddress) {
-        this(pAddress.getId(), pAddress.getUser().getId(), pAddress.getRua(), pAddress.getCidade(), pAddress.getEstado(), pAddress.getComplemento(), pAddress.getPontoReferencia(), pAddress.getCep());
+        this(pAddress.getId(), pAddress.getId_usuario().getId(), pAddress.getRua(), pAddress.getCidade(), pAddress.getEstado(), pAddress.getComplemento(), pAddress.getPontoReferencia(), pAddress.getCep());
     }
 }

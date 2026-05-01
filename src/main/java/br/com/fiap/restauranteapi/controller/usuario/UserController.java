@@ -1,9 +1,9 @@
 package br.com.fiap.restauranteapi.controller.usuario;
 
 import br.com.fiap.restauranteapi.model.dto.usuario.UserDTO;
-import br.com.fiap.restauranteapi.model.request.usuario.UpdateUserRequest;
 import br.com.fiap.restauranteapi.model.request.usuario.CreateUserRequest;
 import br.com.fiap.restauranteapi.model.request.usuario.SearchUserByNameRequest;
+import br.com.fiap.restauranteapi.model.request.usuario.UpdateUserRequest;
 import br.com.fiap.restauranteapi.model.response.success.SuccessMessageResponse;
 import br.com.fiap.restauranteapi.service.usuario.UserService;
 import jakarta.validation.Valid;

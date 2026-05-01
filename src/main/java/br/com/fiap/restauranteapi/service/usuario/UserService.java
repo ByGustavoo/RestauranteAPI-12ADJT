@@ -2,12 +2,12 @@ package br.com.fiap.restauranteapi.service.usuario;
 
 import br.com.fiap.restauranteapi.enums.RegistrationStatus;
 import br.com.fiap.restauranteapi.exceptions.UserNotFoundException;
-import br.com.fiap.restauranteapi.model.mapper.usuario.UserMapper;
-import br.com.fiap.restauranteapi.model.request.usuario.UpdateUserRequest;
 import br.com.fiap.restauranteapi.model.dto.usuario.UserDTO;
 import br.com.fiap.restauranteapi.model.entity.usuario.User;
-import br.com.fiap.restauranteapi.model.request.usuario.SearchUserByNameRequest;
+import br.com.fiap.restauranteapi.model.mapper.usuario.UserMapper;
 import br.com.fiap.restauranteapi.model.request.usuario.CreateUserRequest;
+import br.com.fiap.restauranteapi.model.request.usuario.SearchUserByNameRequest;
+import br.com.fiap.restauranteapi.model.request.usuario.UpdateUserRequest;
 import br.com.fiap.restauranteapi.model.response.success.SuccessMessageResponse;
 import br.com.fiap.restauranteapi.repository.situacaocadastro.RegistrationStatusRepository;
 import br.com.fiap.restauranteapi.repository.tipousuario.UserTypeRepository;
@@ -49,8 +49,8 @@ public class UserService {
                 user.getNome(),
                 user.getEmail(),
                 user.getLogin(),
-                user.getUserType().getDescricao(),
-                user.getRegistrationStatus().getDescricao(),
+                user.getId_tipousuario().getDescricao(),
+                user.getId_situacaocadastro().getDescricao(),
                 user.getDataAlteracao());
     }
 
@@ -66,8 +66,8 @@ public class UserService {
 
         var user = userMapper.fromCreateRequestToEntity(pCreateUserRequest);
         user.setSenha(passwordService.encryptPassword(pCreateUserRequest.senha()));
-        user.setUserType(userTypeRepository.getReferenceById(pCreateUserRequest.tipoUsuario()));
-        user.setRegistrationStatus(registrationStatusRepository.getReferenceById(RegistrationStatus.ACTIVE.getId()));
+        user.setId_tipousuario(userTypeRepository.getReferenceById(pCreateUserRequest.tipoUsuario()));
+        user.setId_situacaocadastro(registrationStatusRepository.getReferenceById(RegistrationStatus.ACTIVE.getId()));
 
         userRepository.save(user);
         return new SuccessMessageResponse(HttpStatus.CREATED.value(), "Usuário cadastrado com sucesso!");
@@ -79,7 +79,7 @@ public class UserService {
         userMapper.updateUser(pUpdateUserRequest, user);
 
         if (pUpdateUserRequest.situacaoCadastro() != null) {
-            user.setRegistrationStatus(registrationStatusRepository.getReferenceById(RegistrationStatus.ACTIVE.getId()));
+            user.setId_situacaocadastro(registrationStatusRepository.getReferenceById(RegistrationStatus.ACTIVE.getId()));
         }
 
         user.setDataAlteracao(LocalDate.now());

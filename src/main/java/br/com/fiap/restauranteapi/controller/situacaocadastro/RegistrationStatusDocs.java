@@ -1,7 +1,7 @@
 package br.com.fiap.restauranteapi.controller.situacaocadastro;
 
 import br.com.fiap.restauranteapi.exceptions.dto.ErrorResponseDTO;
-import br.com.fiap.restauranteapi.model.dto.situacao.RegistrationStatusDTO;
+import br.com.fiap.restauranteapi.model.dto.situacaocadastro.RegistrationStatusDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;

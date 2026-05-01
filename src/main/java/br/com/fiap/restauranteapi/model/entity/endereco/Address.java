@@ -18,7 +18,7 @@ public class Address {
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_usuario", nullable = false)
-    private User user;
+    private User id_usuario;
 
     @NotBlank
     @Column(nullable = false, length = 100)

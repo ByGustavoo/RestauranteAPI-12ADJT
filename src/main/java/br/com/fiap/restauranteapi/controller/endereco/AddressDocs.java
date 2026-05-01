@@ -93,7 +93,7 @@ public interface AddressDocs {
                     responseCode = "500",
                     description = "Erro interno do servidor!",
                     content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))
-           )
+            )
     })
     @DeleteMapping("/{id}")
     ResponseEntity<Void> deleteAddressById(@PathVariable @NotNull Integer id);

@@ -1,4 +1,4 @@
-package br.com.fiap.restauranteapi.repository.address;
+package br.com.fiap.restauranteapi.repository.endereco;
 
 import br.com.fiap.restauranteapi.model.entity.endereco.Address;
 import org.springframework.data.domain.Page;

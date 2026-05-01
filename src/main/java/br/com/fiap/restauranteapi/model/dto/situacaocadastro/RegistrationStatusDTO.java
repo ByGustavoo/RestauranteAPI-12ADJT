@@ -1,4 +1,4 @@
-package br.com.fiap.restauranteapi.model.dto.situacao;
+package br.com.fiap.restauranteapi.model.dto.situacaocadastro;
 
 import br.com.fiap.restauranteapi.model.entity.situacaocadastro.RegistrationStatus;
 import io.swagger.v3.oas.annotations.media.Schema;

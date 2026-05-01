@@ -1,10 +1,10 @@
 package br.com.fiap.restauranteapi.controller.usuario;
 
 import br.com.fiap.restauranteapi.exceptions.dto.ErrorResponseDTO;
-import br.com.fiap.restauranteapi.model.request.usuario.UpdateUserRequest;
 import br.com.fiap.restauranteapi.model.dto.usuario.UserDTO;
 import br.com.fiap.restauranteapi.model.request.usuario.CreateUserRequest;
 import br.com.fiap.restauranteapi.model.request.usuario.SearchUserByNameRequest;
+import br.com.fiap.restauranteapi.model.request.usuario.UpdateUserRequest;
 import br.com.fiap.restauranteapi.model.response.success.SuccessMessageResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;

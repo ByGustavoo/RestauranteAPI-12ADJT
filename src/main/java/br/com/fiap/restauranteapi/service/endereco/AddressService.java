@@ -36,7 +36,7 @@ public class AddressService {
         State.validateState(pCreateAddressRequest.estado());
 
         var address = addressMapper.fromCreateRequestToEntity(pCreateAddressRequest);
-        address.setUser(userRepository.getReferenceById(pCreateAddressRequest.usuarioId()));
+        address.setId_usuario(userRepository.getReferenceById(pCreateAddressRequest.usuarioId()));
 
         addressRepository.save(address);
         return new SuccessMessageResponse(HttpStatus.CREATED.value(), "Endereço criado com sucesso!");

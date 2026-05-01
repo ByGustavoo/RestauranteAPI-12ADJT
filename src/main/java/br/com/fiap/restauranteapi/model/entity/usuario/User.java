@@ -42,18 +42,18 @@ public class User {
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_tipousuario", nullable = false)
-    private UserType userType;
+    private UserType id_tipousuario;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_situacaocadastro", nullable = false)
-    private RegistrationStatus registrationStatus;
+    private RegistrationStatus id_situacaocadastro;
 
     @UpdateTimestamp
     @Column(name = "data_alteracao")
     private LocalDate dataAlteracao;
 
     @OneToMany(mappedBy = "usuario")
-    private List<Address> addresses;
+    private List<Address> enderecos;
 
 }
