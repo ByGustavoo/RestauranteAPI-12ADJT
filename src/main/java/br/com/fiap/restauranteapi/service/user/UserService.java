@@ -76,6 +76,11 @@ public class UserService {
     @Transactional
     public SuccessMessageResponse updateUserById(Integer pId, UpdateUserRequest pUpdateUserRequest) {
         var user = userRepository.findById(pId).orElseThrow(EntityNotFoundException::new);
+
+        if (pUpdateUserRequest.email() != null && !pUpdateUserRequest.email().equalsIgnoreCase(user.getEmail()) && userRepository.existsByEmailIgnoreCase(pUpdateUserRequest.email())) {
+            throw new DataIntegrityViolationException("O E-mail informado já está cadastrado no sistema!");
+        }
+
         userMapper.updateUser(pUpdateUserRequest, user);
 
         if (pUpdateUserRequest.situacaoCadastro() != null) {
