@@ -15,13 +15,13 @@ class AuthControllerTest extends AbstractControllerTest {
 
     private String loginRequest;
 
-    private String alterarSenhaRequest;
+    private String changePasswordRequest;
 
     @BeforeEach
     void setUp() throws IOException {
-        if (loginRequest == null && alterarSenhaRequest == null) {
-            loginRequest = new String(Files.readAllBytes(Paths.get("src/test/resources/auth/login.json")));
-            alterarSenhaRequest = new String(Files.readAllBytes(Paths.get("src/test/resources/auth/changePassword.json")));
+        if (loginRequest == null && changePasswordRequest == null) {
+            loginRequest = new String(Files.readAllBytes(Paths.get("src/test/resources/auth/loginRequest.json")));
+            changePasswordRequest = new String(Files.readAllBytes(Paths.get("src/test/resources/auth/changePasswordRequest.json")));
         }
     }
 
@@ -33,7 +33,7 @@ class AuthControllerTest extends AbstractControllerTest {
 
     @Test
     @Order(2)
-    void alterarSenhaTest() throws Exception {
-        testPatch("/v1/auth/update-password", alterarSenhaRequest);
+    void changePasswordTest() throws Exception {
+        testPatch("/v1/auth/alterar-senha", changePasswordRequest);
     }
 }

@@ -1,9 +1,9 @@
 package br.com.fiap.restauranteapi.controller.auth;
 
 import br.com.fiap.restauranteapi.exceptions.dto.ErrorResponseDTO;
-import br.com.fiap.restauranteapi.model.request.auth.AlterarSenhaRequest;
+import br.com.fiap.restauranteapi.model.request.auth.ChangePasswordRequest;
 import br.com.fiap.restauranteapi.model.request.auth.LoginRequest;
-import br.com.fiap.restauranteapi.model.response.success.MensagemSucessoResponse;
+import br.com.fiap.restauranteapi.model.response.success.SuccessMessageResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -24,7 +24,7 @@ public interface AuthDocs {
             @ApiResponse(
                     responseCode = "200",
                     description = "Login realizado com sucesso!",
-                    content = @Content(schema = @Schema(implementation = MensagemSucessoResponse.class))),
+                    content = @Content(schema = @Schema(implementation = SuccessMessageResponse.class))),
             @ApiResponse(
                     responseCode = "400",
                     description = "Dados inválidos na requisição!",
@@ -39,14 +39,14 @@ public interface AuthDocs {
                     content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class)))
     })
     @PostMapping("/login")
-    ResponseEntity<MensagemSucessoResponse> login(@RequestBody @Valid LoginRequest pLoginRequest);
+    ResponseEntity<SuccessMessageResponse> login(@RequestBody @Valid LoginRequest pLoginRequest);
 
     @Operation(summary = "Alterar senha do usuário", description = "Permite alterar a senha do usuário informando login, senha atual e a nova senha.")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
                     description = "Senha alterada com sucesso!",
-                    content = @Content(schema = @Schema(implementation = MensagemSucessoResponse.class))),
+                    content = @Content(schema = @Schema(implementation = SuccessMessageResponse.class))),
             @ApiResponse(
                     responseCode = "400",
                     description = "Dados inválidos na requisição!",
@@ -60,7 +60,7 @@ public interface AuthDocs {
                     description = "Erro interno do servidor!",
                     content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class)))
     })
-    @PatchMapping("/update-password")
-    ResponseEntity<MensagemSucessoResponse> alterarSenha(@RequestBody @Valid AlterarSenhaRequest pAlterarSenhaRequest);
+    @PatchMapping("/alterar-senha")
+    ResponseEntity<SuccessMessageResponse> changePassword(@RequestBody @Valid ChangePasswordRequest pChangePasswordRequest);
 
 }

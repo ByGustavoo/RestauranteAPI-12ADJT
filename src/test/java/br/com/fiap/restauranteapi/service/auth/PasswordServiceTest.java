@@ -13,44 +13,44 @@ class PasswordServiceTest extends AbstractTest {
     private PasswordService passwordService;
 
     @Test
-    void verificarSenhaTest() {
-        var matches = Assertions.assertDoesNotThrow(() -> passwordService.verificarSenha("SenhaTeste@2026", "$2a$10$yNutDXanvt3WJS1KqynYIuGqFElr6VFwjM9StoQq6LCruVJVbL1lW"));
+    void verifyPasswordTest() {
+        var matches = Assertions.assertDoesNotThrow(() -> passwordService.verifyPassword("SenhaTeste@2026", "$2a$10$yNutDXanvt3WJS1KqynYIuGqFElr6VFwjM9StoQq6LCruVJVbL1lW"));
         Assertions.assertEquals(Boolean.TRUE, matches);
     }
 
     @Test
-    void requestSenhaNullTest() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> passwordService.verificarSenha(null, "$2a$10$yNutDXanvt3WJS1KqynYIuGqFElr6VFwjM9StoQq6LCruVJVbL1lW"));
+    void requestPasswordNullTest() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> passwordService.verifyPassword(null, "$2a$10$yNutDXanvt3WJS1KqynYIuGqFElr6VFwjM9StoQq6LCruVJVbL1lW"));
     }
 
     @Test
-    void requestSenhaEmptyTest() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> passwordService.verificarSenha("", "$2a$10$yNutDXanvt3WJS1KqynYIuGqFElr6VFwjM9StoQq6LCruVJVbL1lW"));
+    void requestPasswordEmptyTest() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> passwordService.verifyPassword("", "$2a$10$yNutDXanvt3WJS1KqynYIuGqFElr6VFwjM9StoQq6LCruVJVbL1lW"));
     }
 
     @Test
-    void requestSenhaCriptografadaNullTest() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> passwordService.verificarSenha("SenhaTeste@2026", null));
+    void requestEncryptPasswordNullTest() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> passwordService.verifyPassword("SenhaTeste@2026", null));
     }
 
     @Test
-    void requestSenhaCriptografadaEmptyTest() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> passwordService.verificarSenha("SenhaTeste@2026", ""));
+    void requestEncryptPasswordEmptyTest() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> passwordService.verifyPassword("SenhaTeste@2026", ""));
     }
 
     @Test
-    void encriptografarSenhaTest() {
-        var senhaEncriptografada = Assertions.assertDoesNotThrow(() -> passwordService.encriptografarSenha("SenhaTeste@2026"));
+    void encryptPasswordTest() {
+        var senhaEncriptografada = Assertions.assertDoesNotThrow(() -> passwordService.encryptPassword("SenhaTeste@2026"));
         Assertions.assertNotNull(senhaEncriptografada);
     }
 
     @Test
-    void encriptografarSenhaNullTest() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> passwordService.encriptografarSenha(null));
+    void encryptPasswordNullTest() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> passwordService.encryptPassword(null));
     }
 
     @Test
-    void encriptografarSenhaEmptyTest() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> passwordService.encriptografarSenha(""));
+    void encryptPasswordEmptyTest() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> passwordService.encryptPassword(""));
     }
 }

@@ -8,8 +8,8 @@ import jakarta.validation.constraints.Size;
 public record LoginRequest(
 
         @NotBlank(message = "O campo 'login' é obrigatório!")
-        @Schema(description = "Login do usuário", example = "usuario123")
         @Size(min = 10, max = 20, message = "O Login deve ter entre 10 e 20 caracteres!")
+        @Schema(description = "Login do usuário", example = "usuario123", minLength = 10, maxLength = 20)
         String login,
 
         @NotBlank(message = "O campo 'senha' é obrigatório!")

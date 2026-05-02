@@ -1,8 +1,8 @@
 package br.com.fiap.restauranteapi.controller.auth;
 
-import br.com.fiap.restauranteapi.model.request.auth.AlterarSenhaRequest;
+import br.com.fiap.restauranteapi.model.request.auth.ChangePasswordRequest;
 import br.com.fiap.restauranteapi.model.request.auth.LoginRequest;
-import br.com.fiap.restauranteapi.model.response.success.MensagemSucessoResponse;
+import br.com.fiap.restauranteapi.model.response.success.SuccessMessageResponse;
 import br.com.fiap.restauranteapi.service.auth.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -19,12 +19,12 @@ public class AuthController implements AuthDocs {
     private final AuthService authService;
 
     @Override
-    public ResponseEntity<MensagemSucessoResponse> login(@RequestBody @Valid LoginRequest pLoginRequest) {
-        return ResponseEntity.ok(authService.autenticarUsuario(pLoginRequest));
+    public ResponseEntity<SuccessMessageResponse> login(@RequestBody @Valid LoginRequest pLoginRequest) {
+        return ResponseEntity.ok(authService.authenticateUser(pLoginRequest));
     }
 
     @Override
-    public ResponseEntity<MensagemSucessoResponse> alterarSenha(@RequestBody @Valid AlterarSenhaRequest pAlterarSenhaRequest) {
-        return ResponseEntity.ok(authService.alterarSenha(pAlterarSenhaRequest));
+    public ResponseEntity<SuccessMessageResponse> changePassword(@RequestBody @Valid ChangePasswordRequest pChangePasswordRequest) {
+        return ResponseEntity.ok(authService.changePassword(pChangePasswordRequest));
     }
 }

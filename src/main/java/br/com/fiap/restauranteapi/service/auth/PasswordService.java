@@ -10,23 +10,23 @@ public class PasswordService {
 
     private final PasswordEncoder passwordEncoder;
 
-    public Boolean verificarSenha(String pRequestSenha, String pSenhaCriptografada) {
-        if (pRequestSenha == null || pRequestSenha.isBlank()) {
+    public Boolean verifyPassword(String pRequestPassword, String pEncryptedPassword) {
+        if (pRequestPassword == null || pRequestPassword.isBlank()) {
             throw new IllegalArgumentException("A senha informada não pode ser nula ou vazia!");
         }
 
-        if (pSenhaCriptografada == null || pSenhaCriptografada.isBlank()) {
+        if (pEncryptedPassword == null || pEncryptedPassword.isBlank()) {
             throw new IllegalArgumentException("A senha do usuário não pode ser nula ou vazia!");
         }
 
-        return passwordEncoder.matches(pRequestSenha, pSenhaCriptografada);
+        return passwordEncoder.matches(pRequestPassword, pEncryptedPassword);
     }
 
-    public String encriptografarSenha(String pSenha) {
-        if (pSenha == null || pSenha.isBlank()) {
+    public String encryptPassword(String pPassword) {
+        if (pPassword == null || pPassword.isBlank()) {
             throw new IllegalArgumentException("A senha não pode ser nula ou vazia!");
         }
 
-        return passwordEncoder.encode(pSenha);
+        return passwordEncoder.encode(pPassword);
     }
 }
