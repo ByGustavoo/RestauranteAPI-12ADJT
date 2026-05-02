@@ -75,7 +75,7 @@ public interface AddressDocs {
     @PatchMapping("/{id}")
     ResponseEntity<SuccessMessageResponse> updateAddressById(@PathVariable Integer id, @RequestBody @Valid UpdateAddressRequest updateAddressRequest);
 
-    @Operation(summary = "Remover um endereço", description = "Realiza a exclusão de um endereço do sistema com base no ID informado na URL.")
+    @Operation(summary = "Deletar um endereço", description = "Deleta um endereço do sistema com base no ID informado na URL.")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "204",

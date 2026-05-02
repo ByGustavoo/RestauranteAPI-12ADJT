@@ -14,10 +14,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Usuário", description = "Endpoints relacionados ao gerenciamento de Usuários")
 public interface UserDocs {
@@ -87,6 +84,27 @@ public interface UserDocs {
                     content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class)))
     })
     @PatchMapping("/{id}")
-    ResponseEntity<SuccessMessageResponse> updateUser(@PathVariable Integer id, @RequestBody @Valid UpdateUserRequest updateUserRequest);
+    ResponseEntity<SuccessMessageResponse> updateUserById(@PathVariable Integer id, @RequestBody @Valid UpdateUserRequest updateUserRequest);
 
+    @Operation(summary = "Deletar um usuário", description = "Deleta um usuário do sistema com base no ID informado na URL.")
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "204",
+                    description = "Usuário removido com sucesso!"),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Dados inválidos na requisição!",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
+            @ApiResponse(
+                    responseCode = "404",
+                    description = "Usuário não encontrado!",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Erro interno do servidor!",
+                    content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))
+            )
+    })
+    @DeleteMapping("/{id}")
+    ResponseEntity<Void> deleteUserById(@PathVariable Integer id);
 }

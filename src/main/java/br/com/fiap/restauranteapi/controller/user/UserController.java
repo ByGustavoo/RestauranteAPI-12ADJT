@@ -33,7 +33,13 @@ public class UserController implements UserDocs {
     }
 
     @Override
-    public ResponseEntity<SuccessMessageResponse> updateUser(@PathVariable Integer id, @RequestBody @Valid UpdateUserRequest updateUserRequest) {
-        return ResponseEntity.ok(userService.updateUser(id, updateUserRequest));
+    public ResponseEntity<SuccessMessageResponse> updateUserById(@PathVariable Integer id, @RequestBody @Valid UpdateUserRequest updateUserRequest) {
+        return ResponseEntity.ok(userService.updateUserById(id, updateUserRequest));
+    }
+
+    @Override
+    public ResponseEntity<Void> deleteUserById(@PathVariable Integer id) {
+        userService.deleteUserById(id);
+        return ResponseEntity.noContent().build();
     }
 }

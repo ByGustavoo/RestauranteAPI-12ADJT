@@ -83,7 +83,7 @@ class UserServiceTest extends AbstractTest {
     }
 
     @Test
-    void updateUserTest() {
+    void updateUserByIdTest() {
 
         var updateUserRequest = new UpdateUserRequest(
                 "João Silva Atualizado",
@@ -91,6 +91,11 @@ class UserServiceTest extends AbstractTest {
                 1
         );
 
-        Assertions.assertDoesNotThrow(() -> userService.updateUser(1, updateUserRequest));
+        Assertions.assertDoesNotThrow(() -> userService.updateUserById(1, updateUserRequest));
+    }
+
+    @Test
+    void deleteUserByIdTest() {
+        Assertions.assertDoesNotThrow(() -> userService.deleteUserById(1));
     }
 }

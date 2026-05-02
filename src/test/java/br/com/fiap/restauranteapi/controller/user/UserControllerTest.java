@@ -38,7 +38,12 @@ class UserControllerTest extends AbstractControllerTest {
     }
 
     @Test
-    void updateUserTest() throws Exception {
+    void updateUserByIdTest() throws Exception {
         testPatch("/v1/usuario/1", updateUserRequest);
+    }
+
+    @Test
+    void deleteUserByIdTest() throws Exception {
+        testDelete("/v1/usuario/1");
     }
 }

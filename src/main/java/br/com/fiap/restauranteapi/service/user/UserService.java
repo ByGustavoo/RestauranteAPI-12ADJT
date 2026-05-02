@@ -74,7 +74,7 @@ public class UserService {
     }
 
     @Transactional
-    public SuccessMessageResponse updateUser(Integer pId, UpdateUserRequest pUpdateUserRequest) {
+    public SuccessMessageResponse updateUserById(Integer pId, UpdateUserRequest pUpdateUserRequest) {
         var user = userRepository.findById(pId).orElseThrow(EntityNotFoundException::new);
         userMapper.updateUser(pUpdateUserRequest, user);
 
@@ -84,5 +84,11 @@ public class UserService {
 
         user.setDataAlteracao(LocalDate.now());
         return new SuccessMessageResponse(HttpStatus.OK.value(), "Usuário atualizado com sucesso!");
+    }
+
+    @Transactional
+    public void deleteUserById(Integer pId) {
+        var user = userRepository.findById(pId).orElseThrow(EntityNotFoundException::new);
+        user.setSituacaoCadastro(registrationStatusRepository.getReferenceById(RegistrationStatus.DELETED.getId()));
     }
 }
