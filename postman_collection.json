@@ -1,0 +1,502 @@
+{
+  "info": {
+    "_postman_id": "06ff5760-4d36-4c25-98d0-220cc211bf6a",
+    "name": "FIAP",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "36784829"
+  },
+  "item": [
+    {
+      "name": "RestauranteAPI",
+      "item": [
+        {
+          "name": "Auth",
+          "item": [
+            {
+              "name": "Login",
+              "item": [
+                {
+                  "name": "Login",
+                  "request": {
+                    "method": "POST",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\r\n    \"login\": \"maria_user01\",\r\n    \"senha\": \"SenhaTeste@2026\"\r\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{URL}}/v1/auth/login",
+                      "host": [
+                        "{{URL}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "auth",
+                        "login"
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ]
+            },
+            {
+              "name": "Change Password",
+              "item": [
+                {
+                  "name": "Change Password",
+                  "request": {
+                    "method": "PATCH",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\r\n    \"login\": \"joao_user01\",\r\n    \"senhaAtual\": \"SenhaTeste@2026\",\r\n    \"senhaNova\": \"SenhaTeste@2027\"\r\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{URL}}/v1/auth/alterar-senha",
+                      "host": [
+                        "{{URL}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "auth",
+                        "alterar-senha"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Change Password Error",
+                  "request": {
+                    "method": "PATCH",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\r\n    \"login\": \"joao_user01\",\r\n    \"senhaAtual\": \"SenhaErrada@2026\",\r\n    \"senhaNova\": \"SenhaTeste@2027\"\r\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{URL}}/v1/auth/alterar-senha",
+                      "host": [
+                        "{{URL}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "auth",
+                        "alterar-senha"
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Usuário",
+          "item": [
+            {
+              "name": "Search",
+              "item": [
+                {
+                  "name": "findByNome",
+                  "request": {
+                    "method": "POST",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\r\n    \"nome\": \"Carlos Lima\"\r\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{URL}}/v1/usuario/buscar",
+                      "host": [
+                        "{{URL}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "usuario",
+                        "buscar"
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ]
+            },
+            {
+              "name": "Create",
+              "item": [
+                {
+                  "name": "Create",
+                  "request": {
+                    "method": "POST",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\r\n  \"nome\": \"Gustavo Correa\",\r\n  \"email\": \"gustavo.correa@gmail.com\",\r\n  \"login\": \"gustavo_user05\",\r\n  \"senha\": \"senha@123456\",\r\n  \"tipoUsuario\": 1\r\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{URL}}/v1/usuario",
+                      "host": [
+                        "{{URL}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "usuario"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Create Error",
+                  "request": {
+                    "method": "POST",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\r\n  \"nome\": \"João Correa\",\r\n  \"email\": \"joao@email.com\",\r\n  \"login\": \"joao_user05\",\r\n  \"senha\": \"senha@123456\",\r\n  \"tipoUsuario\": 1\r\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{URL}}/v1/usuario",
+                      "host": [
+                        "{{URL}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "usuario"
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ]
+            },
+            {
+              "name": "Update",
+              "item": [
+                {
+                  "name": "Update",
+                  "request": {
+                    "method": "PATCH",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\r\n  \"nome\": \"João Silva Pereira\",\r\n  \"email\": \"joao_silva@email.com\"\r\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{URL}}/v1/usuario/2",
+                      "host": [
+                        "{{URL}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "usuario",
+                        "2"
+                      ]
+                    }
+                  },
+                  "response": []
+                },
+                {
+                  "name": "Update Error",
+                  "request": {
+                    "method": "PATCH",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\r\n  \"nome\": \"João Silva Pereira\",\r\n  \"email\": \"ana@email.com\"\r\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{URL}}/v1/usuario/2",
+                      "host": [
+                        "{{URL}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "usuario",
+                        "2"
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ]
+            },
+            {
+              "name": "Delete",
+              "item": [
+                {
+                  "name": "delete",
+                  "request": {
+                    "method": "DELETE",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{URL}}/v1/usuario/1",
+                      "host": [
+                        "{{URL}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "usuario",
+                        "1"
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Swagger",
+          "item": [
+            {
+              "name": "Swagger",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{URL}}/swagger-ui/index.html",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "swagger-ui",
+                    "index.html"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Endereços",
+          "item": [
+            {
+              "name": "Search",
+              "item": [
+                {
+                  "name": "findAll",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\r\n    \"login\": \"joao_user01\",\r\n    \"senha\": \"SenhaTeste@2026\"\r\n}"
+                    },
+                    "url": {
+                      "raw": "{{URL}}/v1/endereco",
+                      "host": [
+                        "{{URL}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "endereco"
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ]
+            },
+            {
+              "name": "Create",
+              "item": [
+                {
+                  "name": "Create",
+                  "request": {
+                    "method": "POST",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\r\n  \"usuarioId\": 2,\r\n  \"rua\": \"Rua das Flores\",\r\n  \"cidade\": \"São Paulo\",\r\n  \"estado\": \"SP\",\r\n  \"complemento\": \"Apartamento 101\",\r\n  \"pontoReferencia\": \"Próximo ao supermercado\",\r\n  \"cep\": \"12345-678\"\r\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{URL}}/v1/endereco",
+                      "host": [
+                        "{{URL}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "endereco"
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ]
+            },
+            {
+              "name": "Update",
+              "item": [
+                {
+                  "name": "Update",
+                  "request": {
+                    "method": "PATCH",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\r\n  \"rua\": \"Rua das Flores\",\r\n  \"cidade\": \"São Paulo\",\r\n  \"estado\": \"SP\",\r\n  \"complemento\": \"Apto 101\",\r\n  \"pontoReferencia\": \"Próximo ao supermercado\",\r\n  \"cep\": \"12345-678\"\r\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{URL}}/v1/endereco/1",
+                      "host": [
+                        "{{URL}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "endereco",
+                        "1"
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ]
+            },
+            {
+              "name": "Delete",
+              "item": [
+                {
+                  "name": "delete",
+                  "request": {
+                    "method": "DELETE",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\r\n    \"login\": \"joao_user01\",\r\n    \"senha\": \"SenhaTeste@2026\"\r\n}"
+                    },
+                    "url": {
+                      "raw": "{{URL}}/v1/endereco/1",
+                      "host": [
+                        "{{URL}}"
+                      ],
+                      "path": [
+                        "v1",
+                        "endereco",
+                        "1"
+                      ]
+                    }
+                  },
+                  "response": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Tipo Usuário",
+          "item": [
+            {
+              "name": "findAll",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{URL}}/v1/tipousuario",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "tipousuario"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Situacão Cadastro",
+          "item": [
+            {
+              "name": "findAll",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{URL}}/v1/situacaocadastro",
+                  "host": [
+                    "{{URL}}"
+                  ],
+                  "path": [
+                    "v1",
+                    "situacaocadastro"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

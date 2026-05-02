@@ -56,9 +56,7 @@ public class UserService {
 
     @Transactional
     public SuccessMessageResponse saveUser(CreateUserRequest pCreateUserRequest) {
-        if (userRepository.existsByEmailIgnoreCase(pCreateUserRequest.email())) {
-            throw new DataIntegrityViolationException("O E-mail informado já está cadastrado no sistema!");
-        }
+        validateEmailAlreadyExists(pCreateUserRequest.email(), null);
 
         if (userRepository.existsByLoginIgnoreCase(pCreateUserRequest.login())) {
             throw new DataIntegrityViolationException("O Login informado já está cadastrado no sistema!");
@@ -77,10 +75,7 @@ public class UserService {
     public SuccessMessageResponse updateUserById(Integer pId, UpdateUserRequest pUpdateUserRequest) {
         var user = userRepository.findById(pId).orElseThrow(EntityNotFoundException::new);
 
-        if (pUpdateUserRequest.email() != null && !pUpdateUserRequest.email().equalsIgnoreCase(user.getEmail()) && userRepository.existsByEmailIgnoreCase(pUpdateUserRequest.email())) {
-            throw new DataIntegrityViolationException("O E-mail informado já está cadastrado no sistema!");
-        }
-
+        validateEmailAlreadyExists(pUpdateUserRequest.email(), pId);
         userMapper.updateUser(pUpdateUserRequest, user);
 
         if (pUpdateUserRequest.situacaoCadastro() != null) {
@@ -95,5 +90,13 @@ public class UserService {
     public void deleteUserById(Integer pId) {
         var user = userRepository.findById(pId).orElseThrow(EntityNotFoundException::new);
         user.setSituacaoCadastro(registrationStatusRepository.getReferenceById(RegistrationStatus.DELETED.getId()));
+    }
+
+    private void validateEmailAlreadyExists(String pEmail, Integer pUserId) {
+        boolean exists = pUserId == null ? userRepository.existsByEmailIgnoreCase(pEmail) : userRepository.existsByEmailIgnoreCaseAndIdNot(pEmail, pUserId);
+
+        if (exists) {
+            throw new DataIntegrityViolationException("O E-mail informado já está cadastrado no sistema!");
+        }
     }
 }

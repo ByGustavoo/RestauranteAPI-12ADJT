@@ -11,15 +11,15 @@ public record SuccessMessageResponse(
         @Schema(description = "Código HTTP da resposta")
         int status,
 
-        @Schema(description = "Mensagem de sucesso")
-        String mensagem,
-
         @Schema(description = "Data e hora da resposta", example = "25/12/2024 - 14:30:00")
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy - HH:mm:ss")
-        LocalDateTime timestamp
+        LocalDateTime timestamp,
+
+        @Schema(description = "Mensagem de sucesso")
+        String mensagem
 
 ) {
     public SuccessMessageResponse(int pStatus, String pMessage) {
-        this(pStatus, pMessage, LocalDateTime.now());
+        this(pStatus, LocalDateTime.now(), pMessage);
     }
 }
