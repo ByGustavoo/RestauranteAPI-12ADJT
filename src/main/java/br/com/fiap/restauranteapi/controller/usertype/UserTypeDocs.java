@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
-@Tag(name = "Tipo Usuário", description = "Endpoints relacionados aos Tipos de Usuários")
+@Tag(name = "Tipo Usuário", description = "Endpoints relacionados aos Tipos de Usuários do sistema")
 public interface UserTypeDocs {
 
     @Operation(summary = "Listar os tipos de usuários", description = "Retorna uma lista dos tipos de usuários disponíveis no sistema.")

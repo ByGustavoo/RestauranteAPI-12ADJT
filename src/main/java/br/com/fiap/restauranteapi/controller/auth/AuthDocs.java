@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Tag(name = "Auth", description = "Endpoints relacionados à autenticação e gerenciamento de credenciais dos Usuários")
 public interface AuthDocs {
 
-    @Operation(summary = "Realizar o login", description = "Realiza a autenticação do usuário informando login e senha válidos.")
+    @Operation(summary = "Realizar o login", description = "Realiza a autenticação do usuário informando login e senha válidos no corpo da requisição.")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
@@ -41,7 +41,7 @@ public interface AuthDocs {
     @PostMapping("/login")
     ResponseEntity<SuccessMessageResponse> login(@RequestBody @Valid LoginRequest pLoginRequest);
 
-    @Operation(summary = "Alterar senha do usuário", description = "Permite alterar a senha do usuário informando login, senha atual e a nova senha.")
+    @Operation(summary = "Alterar senha do usuário", description = "Permite alterar a senha do usuário informando login, senha atual e a nova senha no corpo da requisição.")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",

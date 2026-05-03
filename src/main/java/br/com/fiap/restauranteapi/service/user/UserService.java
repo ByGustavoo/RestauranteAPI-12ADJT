@@ -6,14 +6,13 @@ import br.com.fiap.restauranteapi.model.dto.user.UserDTO;
 import br.com.fiap.restauranteapi.model.entity.user.User;
 import br.com.fiap.restauranteapi.model.mapper.user.UserMapper;
 import br.com.fiap.restauranteapi.model.request.user.CreateUserRequest;
-import br.com.fiap.restauranteapi.model.request.user.findUserByNameRequest;
 import br.com.fiap.restauranteapi.model.request.user.UpdateUserRequest;
+import br.com.fiap.restauranteapi.model.request.user.findUserByNameRequest;
 import br.com.fiap.restauranteapi.model.response.success.SuccessMessageResponse;
 import br.com.fiap.restauranteapi.repository.registrationstatus.RegistrationStatusRepository;
-import br.com.fiap.restauranteapi.repository.usertype.UserTypeRepository;
 import br.com.fiap.restauranteapi.repository.user.UserRepository;
+import br.com.fiap.restauranteapi.repository.usertype.UserTypeRepository;
 import br.com.fiap.restauranteapi.service.auth.PasswordService;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -73,7 +72,7 @@ public class UserService {
 
     @Transactional
     public SuccessMessageResponse updateUserById(Integer pId, UpdateUserRequest pUpdateUserRequest) {
-        var user = userRepository.findById(pId).orElseThrow(EntityNotFoundException::new);
+        var user = userRepository.findById(pId).orElseThrow(() -> new UserNotFoundException("O Usuário com o ID informado não foi encontrado!"));
 
         validateEmailAlreadyExists(pUpdateUserRequest.email(), pId);
         userMapper.updateUser(pUpdateUserRequest, user);
@@ -88,7 +87,7 @@ public class UserService {
 
     @Transactional
     public void deleteUserById(Integer pId) {
-        var user = userRepository.findById(pId).orElseThrow(EntityNotFoundException::new);
+        var user = userRepository.findById(pId).orElseThrow(() -> new UserNotFoundException("O Usuário com o ID informado não foi encontrado!"));
         user.setSituacaoCadastro(registrationStatusRepository.getReferenceById(RegistrationStatus.DELETED.getId()));
     }
 
