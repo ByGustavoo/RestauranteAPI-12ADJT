@@ -3,7 +3,7 @@ package br.com.fiap.restauranteapi.controller.user;
 import br.com.fiap.restauranteapi.exceptions.dto.ErrorResponseDTO;
 import br.com.fiap.restauranteapi.model.dto.user.UserDTO;
 import br.com.fiap.restauranteapi.model.request.user.CreateUserRequest;
-import br.com.fiap.restauranteapi.model.request.user.findUserByNameRequest;
+import br.com.fiap.restauranteapi.model.request.user.SearchUserByNameRequest;
 import br.com.fiap.restauranteapi.model.request.user.UpdateUserRequest;
 import br.com.fiap.restauranteapi.model.response.success.SuccessMessageResponse;
 import io.swagger.v3.oas.annotations.Operation;
@@ -39,7 +39,7 @@ public interface UserDocs {
                     content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class)))
     })
     @PostMapping("/buscar")
-    ResponseEntity<UserDTO> getUserByName(@RequestBody @Valid findUserByNameRequest findUserByNameRequest);
+    ResponseEntity<UserDTO> getUserByName(@RequestBody @Valid SearchUserByNameRequest searchUserByNameRequest);
 
     @Operation(summary = "Cadastrar um usuário", description = "Realiza o cadastro de um novo usuário no sistema com base nos dados informados no corpo da requisição.")
     @ApiResponses(value = {
