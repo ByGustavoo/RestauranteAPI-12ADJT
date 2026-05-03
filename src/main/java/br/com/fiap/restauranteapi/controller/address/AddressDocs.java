@@ -81,10 +81,6 @@ public interface AddressDocs {
                     responseCode = "204",
                     description = "Endereço removido com sucesso!"),
             @ApiResponse(
-                    responseCode = "400",
-                    description = "Dados inválidos na requisição!",
-                    content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),
-            @ApiResponse(
                     responseCode = "404",
                     description = "Endereço não encontrado!",
                     content = @Content(schema = @Schema(implementation = ErrorResponseDTO.class))),

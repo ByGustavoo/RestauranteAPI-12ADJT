@@ -63,8 +63,7 @@ public interface UserDocs {
     @PostMapping
     ResponseEntity<SuccessMessageResponse> createUser(@RequestBody @Valid CreateUserRequest createUserRequest);
 
-
-    @Operation(summary = "Atualizar usuário por ID", description = "Atualiza os dados do usuário com base no ID informado.")
+    @Operation(summary = "Atualizar um usuário", description = "Atualiza parcialmente um usuário existente com base no ID informado na URL e nos dados enviados no corpo da requisição.")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200",
@@ -107,4 +106,5 @@ public interface UserDocs {
     })
     @DeleteMapping("/{id}")
     ResponseEntity<Void> deleteUserById(@PathVariable Integer id);
+
 }

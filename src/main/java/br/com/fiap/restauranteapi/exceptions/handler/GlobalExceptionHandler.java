@@ -11,29 +11,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.MissingPathVariableException;
-import org.springframework.web.bind.UnsatisfiedServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.method.annotation.HandlerMethodValidationException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-
-    @ExceptionHandler(HandlerMethodValidationException.class)
-    public ResponseEntity<ErrorResponseDTO> handleHandlerMethodValidationException(HandlerMethodValidationException ex, HttpServletRequest pHttpServletRequest) {
-
-        var response = new ErrorResponseDTO(
-                HttpStatus.BAD_REQUEST.value(),
-                "Parâmetros Inválidos!",
-                pHttpServletRequest.getRequestURI(),
-                "/RestauranteAPI/problems/invalid-parameters",
-                "Verifique os dados informados na requisição e tente novamente.",
-                ex.getMessage());
-
-        return ResponseEntity.badRequest().body(response);
-    }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponseDTO> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex, HttpServletRequest pHttpServletRequest) {
@@ -66,34 +49,6 @@ public class GlobalExceptionHandler {
                 pHttpServletRequest.getRequestURI(),
                 "/RestauranteAPI/problems/unreadable-message",
                 ex.getMostSpecificCause().getMessage(),
-                ex.getMessage());
-
-        return ResponseEntity.badRequest().body(response);
-    }
-
-    @ExceptionHandler(UnsatisfiedServletRequestParameterException.class)
-    public ResponseEntity<ErrorResponseDTO> handleUnsatisfiedServletRequestParameterException(UnsatisfiedServletRequestParameterException ex, HttpServletRequest pHttpServletRequest) {
-
-        var response = new ErrorResponseDTO(
-                HttpStatus.BAD_REQUEST.value(),
-                "Parâmetros Inválidos!",
-                pHttpServletRequest.getRequestURI(),
-                "/RestauranteAPI/problems/request-parameter-error",
-                "Verifique os dados informados na requisição e tente novamente.",
-                ex.getMessage());
-
-        return ResponseEntity.badRequest().body(response);
-    }
-
-    @ExceptionHandler(MissingPathVariableException.class)
-    public ResponseEntity<ErrorResponseDTO> handleMissingPathVariableException(MissingPathVariableException ex, HttpServletRequest pHttpServletRequest) {
-
-        var response = new ErrorResponseDTO(
-                HttpStatus.BAD_REQUEST.value(),
-                "Parâmetro não Informado!",
-                pHttpServletRequest.getRequestURI(),
-                "/RestauranteAPI/problems/missing-path-variable",
-                "O parâmetro '" + ex.getVariableName() + "' é obrigatório e não foi informado na URL!",
                 ex.getMessage());
 
         return ResponseEntity.badRequest().body(response);
