@@ -95,6 +95,18 @@ class UserServiceTest extends AbstractTest {
     }
 
     @Test
+    void updateUserByIdEmailNullTest() {
+
+        var updateUserRequest = new UpdateUserRequest(
+                "João Silva Atualizado",
+                null,
+                1
+        );
+
+        Assertions.assertThrows(UserNotFoundException.class, () -> userService.updateUserById(999, updateUserRequest));
+    }
+
+    @Test
     void updateUserByIdUserNotFoundTest() {
 
         var updateUserRequest = new UpdateUserRequest(
