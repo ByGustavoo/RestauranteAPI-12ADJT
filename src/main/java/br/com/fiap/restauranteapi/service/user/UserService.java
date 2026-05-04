@@ -92,6 +92,10 @@ public class UserService {
     }
 
     private void validateEmailAlreadyExists(String pEmail, Integer pUserId) {
+        if (pEmail == null || pEmail.isBlank()) {
+            return;
+        }
+
         boolean exists = pUserId == null ? userRepository.existsByEmailIgnoreCase(pEmail) : userRepository.existsByEmailIgnoreCaseAndIdNot(pEmail, pUserId);
 
         if (exists) {
