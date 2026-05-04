@@ -6,14 +6,13 @@ import br.com.fiap.restauranteapi.model.dto.user.UserDTO;
 import br.com.fiap.restauranteapi.model.entity.user.User;
 import br.com.fiap.restauranteapi.model.mapper.user.UserMapper;
 import br.com.fiap.restauranteapi.model.request.user.CreateUserRequest;
-import br.com.fiap.restauranteapi.model.request.user.findUserByNameRequest;
+import br.com.fiap.restauranteapi.model.request.user.SearchUserByNameRequest;
 import br.com.fiap.restauranteapi.model.request.user.UpdateUserRequest;
 import br.com.fiap.restauranteapi.model.response.success.SuccessMessageResponse;
 import br.com.fiap.restauranteapi.repository.registrationstatus.RegistrationStatusRepository;
-import br.com.fiap.restauranteapi.repository.usertype.UserTypeRepository;
 import br.com.fiap.restauranteapi.repository.user.UserRepository;
+import br.com.fiap.restauranteapi.repository.usertype.UserTypeRepository;
 import br.com.fiap.restauranteapi.service.auth.PasswordService;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
@@ -41,8 +40,8 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public UserDTO findUserByName(findUserByNameRequest pFindUserByNameRequest) {
-        var user = userRepository.findByNome(pFindUserByNameRequest.nome()).orElseThrow(() -> new UserNotFoundException("O Usuário com o nome informado não foi encontrado!"));
+    public UserDTO findUserByName(SearchUserByNameRequest pSearchUserByNameRequest) {
+        var user = userRepository.findByNome(pSearchUserByNameRequest.nome()).orElseThrow(() -> new UserNotFoundException("O Usuário com o nome informado não foi encontrado!"));
 
         return new UserDTO(
                 user.getId(),
@@ -56,9 +55,7 @@ public class UserService {
 
     @Transactional
     public SuccessMessageResponse saveUser(CreateUserRequest pCreateUserRequest) {
-        if (userRepository.existsByEmailIgnoreCase(pCreateUserRequest.email())) {
-            throw new DataIntegrityViolationException("O E-mail informado já está cadastrado no sistema!");
-        }
+        validateEmailAlreadyExists(pCreateUserRequest.email(), null);
 
         if (userRepository.existsByLoginIgnoreCase(pCreateUserRequest.login())) {
             throw new DataIntegrityViolationException("O Login informado já está cadastrado no sistema!");
@@ -75,7 +72,9 @@ public class UserService {
 
     @Transactional
     public SuccessMessageResponse updateUserById(Integer pId, UpdateUserRequest pUpdateUserRequest) {
-        var user = userRepository.findById(pId).orElseThrow(EntityNotFoundException::new);
+        var user = userRepository.findById(pId).orElseThrow(() -> new UserNotFoundException("O Usuário com o ID informado não foi encontrado!"));
+
+        validateEmailAlreadyExists(pUpdateUserRequest.email(), pId);
         userMapper.updateUser(pUpdateUserRequest, user);
 
         if (pUpdateUserRequest.situacaoCadastro() != null) {
@@ -88,7 +87,19 @@ public class UserService {
 
     @Transactional
     public void deleteUserById(Integer pId) {
-        var user = userRepository.findById(pId).orElseThrow(EntityNotFoundException::new);
+        var user = userRepository.findById(pId).orElseThrow(() -> new UserNotFoundException("O Usuário com o ID informado não foi encontrado!"));
         user.setSituacaoCadastro(registrationStatusRepository.getReferenceById(RegistrationStatus.DELETED.getId()));
+    }
+
+    private void validateEmailAlreadyExists(String pEmail, Integer pUserId) {
+        if (pEmail == null || pEmail.isBlank()) {
+            return;
+        }
+
+        boolean exists = pUserId == null ? userRepository.existsByEmailIgnoreCase(pEmail) : userRepository.existsByEmailIgnoreCaseAndIdNot(pEmail, pUserId);
+
+        if (exists) {
+            throw new DataIntegrityViolationException("O E-mail informado já está cadastrado no sistema!");
+        }
     }
 }

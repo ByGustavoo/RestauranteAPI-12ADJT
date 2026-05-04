@@ -3,7 +3,7 @@ package br.com.fiap.restauranteapi.service.user;
 import br.com.fiap.restauranteapi.config.AbstractTest;
 import br.com.fiap.restauranteapi.exceptions.UserNotFoundException;
 import br.com.fiap.restauranteapi.model.request.user.CreateUserRequest;
-import br.com.fiap.restauranteapi.model.request.user.findUserByNameRequest;
+import br.com.fiap.restauranteapi.model.request.user.SearchUserByNameRequest;
 import br.com.fiap.restauranteapi.model.request.user.UpdateUserRequest;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -32,7 +32,7 @@ class UserServiceTest extends AbstractTest {
 
     @Test
     void findUserByNameTest() {
-        var usuario = userService.findUserByName(new findUserByNameRequest("João Silva"));
+        var usuario = userService.findUserByName(new SearchUserByNameRequest("João Silva"));
 
         Assertions.assertNotNull(usuario);
         Assertions.assertEquals("João Silva", usuario.nome());
@@ -40,7 +40,7 @@ class UserServiceTest extends AbstractTest {
 
     @Test
     void findUserByNameExceptionTest() {
-        Assertions.assertThrows(UserNotFoundException.class, () -> userService.findUserByName(new findUserByNameRequest("Nome Inexistente")));
+        Assertions.assertThrows(UserNotFoundException.class, () -> userService.findUserByName(new SearchUserByNameRequest("Nome Inexistente")));
     }
 
     @Test
@@ -95,7 +95,48 @@ class UserServiceTest extends AbstractTest {
     }
 
     @Test
+    void updateUserByIdEmailNullTest() {
+
+        var updateUserRequest = new UpdateUserRequest(
+                "João Silva Atualizado",
+                null,
+                1
+        );
+
+        Assertions.assertDoesNotThrow(() -> userService.updateUserById(1, updateUserRequest));
+    }
+
+    @Test
+    void updateUserByIdEmailEmptyTest() {
+
+        var updateUserRequest = new UpdateUserRequest(
+                "João Silva Atualizado",
+                "",
+                1
+        );
+
+        Assertions.assertDoesNotThrow(() -> userService.updateUserById(1, updateUserRequest));
+    }
+
+    @Test
+    void updateUserByIdUserNotFoundTest() {
+
+        var updateUserRequest = new UpdateUserRequest(
+                "João Silva Atualizado",
+                "joao.atualizado@email.com",
+                1
+        );
+
+        Assertions.assertThrows(UserNotFoundException.class, () -> userService.updateUserById(999, updateUserRequest));
+    }
+
+    @Test
     void deleteUserByIdTest() {
         Assertions.assertDoesNotThrow(() -> userService.deleteUserById(1));
+    }
+
+    @Test
+    void deleteUserByIdUserNotFoundTest() {
+        Assertions.assertThrows(UserNotFoundException.class, () -> userService.deleteUserById(999));
     }
 }

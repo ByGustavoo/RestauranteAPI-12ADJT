@@ -53,6 +53,21 @@ class AddressServiceTest extends AbstractTest {
     }
 
     @Test
+    void updateAddressByIdStateNullTest() {
+
+        var address = new UpdateAddressRequest(
+                "123",
+                "Bairro Teste",
+                null,
+                "Perto do supermercado",
+                "",
+                "12345-678"
+        );
+
+        Assertions.assertDoesNotThrow(() -> addressService.updateAddressById(1, address));
+    }
+
+    @Test
     void deleteAddressByIdTest() {
         Assertions.assertDoesNotThrow(() -> addressService.deleteAddressById(1));
     }
