@@ -338,7 +338,7 @@
                     "header": [],
                     "body": {
                       "mode": "raw",
-                      "raw": "{\r\n    \"login\": \"joao_user01\",\r\n    \"senha\": \"SenhaTeste@2026\"\r\n}"
+                      "raw": ""
                     },
                     "url": {
                       "raw": "{{URL}}/v1/endereco",
@@ -474,7 +474,7 @@
           ]
         },
         {
-          "name": "Situação Cadastro",
+          "name": "Situacão Cadastro",
           "item": [
             {
               "name": "findAll",
